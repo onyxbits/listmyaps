@@ -227,7 +227,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 		if (installer.startsWith("com.google")) {
 			return "https://play.google.com/store/apps/details?id=" + packname;
 		}
-		if (installer.startsWith("org.f-droid")) {
+		if (installer.startsWith("org.fdroid")) {
 			return "https://f-droid.org/repository/browse/?fdid=" + packname;
 		}
 
