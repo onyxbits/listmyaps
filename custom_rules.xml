@@ -1,0 +1,21 @@
+<!-- 
+Customize the build process: create an assets/build.properties file that can
+be checked at runtime for build options and give the APK a more verbose
+name.
+-->
+<project name="Bundle Helper for enabling app store specific features">
+  
+    
+  <target name="-pre-build">
+    <!-- Extract version information from AndroidManifest.xml -->
+    <xpath input="${manifest.abs.file}" expression="/manifest/@android:versionName" output="dist.version.name" default="unknown"/> 
+    <xpath input="${manifest.abs.file}" expression="/manifest/@android:versionCode" output="dist.version.code" default="-1"/> 
+  </target>
+  
+  <target name="-post-build">
+    <copy 
+      overwrite="true" 
+      file="${out.final.file}" 
+      tofile="${out.absolute.dir}/${ant.project.name}-${build.target}-${dist.version.name}.apk" />
+  </target>
+</project>

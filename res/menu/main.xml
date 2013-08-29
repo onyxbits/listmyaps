@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/copy" android:title="@android:string/copy" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/share" android:title="@string/share" android:showAsAction="ifRoom"></item><item android:id="@+id/select_all" android:title="@android:string/selectAll"></item>
+    <item android:id="@+id/deselect_all" android:title="@string/deselect_all"></item>
+    
+
+</menu>
