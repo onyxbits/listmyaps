@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">List My Apps</string>
+    <string name="deselect_all">Alles abwählen</string>
+    <string name="share">Teilen</string>
+    <string-array name="formatnames">
+        <item>Klartext</item><item>HTML Liste</item><item>BBCode Liste</item><item >Markdown Liste</item>
+        
+        
+        
+    </string-array>
+        <string name="format_as">Kopieren/Teilen als:</string>
+        <string name="list_copied_to_clipboard">Liste in Zwischenablage kopiert</string>
+        <string name="always_link">Immer auf Google Play verweisen, auch wenn nicht von dort heruntergeladen</string>
+        <string name="warn_nothing_selected">Es muss mindestens eine App ausgewählt sein!</string>
+        <string name="send_to">Teilen mit</string>
+
+</resources>
