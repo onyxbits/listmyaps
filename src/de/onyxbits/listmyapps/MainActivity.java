@@ -96,7 +96,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 				sendIntent.setAction(Intent.ACTION_SEND);
 				sendIntent.putExtra(Intent.EXTRA_TEXT, buildList().toString());
 				sendIntent.setType("text/plain");
-				startActivity(sendIntent);
+				startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
 				break;
 			}
 			case R.id.copy: {

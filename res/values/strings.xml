@@ -14,5 +14,6 @@
         <string name="list_copied_to_clipboard">List copied to clipboard</string>
         <string name="always_link">Always link to Google Play, even if the app does not come from there</string>
         <string name="warn_nothing_selected">Select the apps you want to list!</string>
+        <string name="send_to">Share with</string>
 
 </resources>
