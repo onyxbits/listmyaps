@@ -11,8 +11,10 @@ import android.text.ClipboardManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -20,7 +22,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnItemSelectedListener {
+public class MainActivity extends Activity implements OnItemSelectedListener, OnItemClickListener {
 
 	protected ArrayList<SortablePackageInfo> apps;
 	private int formatIndex;
@@ -40,6 +42,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		setProgressBarVisibility(true);
 		CheckBox checkbox = (CheckBox) findViewById(R.id.always_link);
 		Spinner spinner = (Spinner) findViewById(R.id.format_select);
+		ListView listView = (ListView) findViewById(R.id.listView1);
+		listView.setOnItemClickListener(this);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 				R.array.formatnames, android.R.layout.simple_spinner_item);
 		adapter
@@ -51,7 +55,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		checkbox.setChecked(prefs.getBoolean((ALWAYS_GOOGLE_PLAY), false));
 		formatIndex = prefs.getInt(FORMATTYPE, 0);
 		spinner.setSelection(formatIndex);
-		new ListTask(this, (ListView) findViewById(R.id.listView1)).execute("");
+		new ListTask(this, listView).execute("");
 	}
 
 	@Override
@@ -246,4 +250,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	public void onNothingSelected(AdapterView<?> parent) {
 
 	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		((CheckBox)view.findViewById(R.id.selected)).toggle();
+	}
+
 }
