@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		while (it.hasNext()) {
 			SortablePackageInfo spi = it.next();
 			if (spi.selected) {
-				String tmp = spi.packageName;
+				String tmp = spi.installer;
 				if (toMarket) {
 					tmp = "com.google.vending";
 				}
@@ -222,6 +222,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 		if (installer.startsWith("com.google")) {
 			return "https://play.google.com/store/apps/details?id=" + packname;
+		}
+		if (installer.startsWith("org.f-droid")) {
+			return "https://f-droid.org/repository/browse/?fdid=" + packname;
 		}
 
 		return null;
