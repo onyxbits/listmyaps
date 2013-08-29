@@ -1,0 +1,3 @@
+Scans Android devices for installed apps and compiles a list of them 
+in various textformats (with market backlinks) for sharing in online
+forums, chats, via email,...
