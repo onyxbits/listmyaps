@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 		setProgressBarVisibility(true);
 		CheckBox checkbox = (CheckBox) findViewById(R.id.always_link);
 		Spinner spinner = (Spinner) findViewById(R.id.format_select);
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView listView = (ListView) findViewById(R.id.applist);
 		listView.setOnItemClickListener(this);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 				R.array.formatnames, android.R.layout.simple_spinner_item);
@@ -114,7 +114,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 				while (it.hasNext()) {
 					SortablePackageInfo spi = it.next();
 					spi.selected = false;
-					((AppAdapter) ((ListView) findViewById(R.id.listView1)).getAdapter())
+					((AppAdapter) ((ListView) findViewById(R.id.applist)).getAdapter())
 							.notifyDataSetChanged();
 				}
 				break;
@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 				while (it.hasNext()) {
 					SortablePackageInfo spi = it.next();
 					spi.selected = true;
-					((AppAdapter) ((ListView) findViewById(R.id.listView1)).getAdapter())
+					((AppAdapter) ((ListView) findViewById(R.id.applist)).getAdapter())
 							.notifyDataSetChanged();
 				}
 				break;
