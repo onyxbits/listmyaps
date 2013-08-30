@@ -236,7 +236,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 		if (installer.startsWith("com.amazon")) {
 			return "http://www.amazon.com/gp/mas/dl/android?p=" + packname;
 		}
-
+		if (installer.startsWith("org.slideme")) {
+			return "http://slideme.org/app/" + packname;
+		}
+		
 		return null;
 	}
 
