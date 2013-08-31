@@ -19,16 +19,19 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 	
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    View ret;
+    View ret=convertView;
+    if (ret==null) {
+    	LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	ret = inflater.inflate(R.layout.app_item,null);
+    }
     SortablePackageInfo spi = getItem(position);
     
-    LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    ret = inflater.inflate(R.layout.app_item,null);
     ((TextView)ret.findViewById(R.id.appname)).setText(spi.displayName);
     ((TextView)ret.findViewById(R.id.apppackage)).setText(spi.packageName);
     CheckBox sel = ((CheckBox)ret.findViewById(R.id.selected));
-    sel.setOnClickListener(spi);
     sel.setChecked(spi.selected);
+    sel.setOnClickListener(spi);
+    
     return ret;
 
   }
