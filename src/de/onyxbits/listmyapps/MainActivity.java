@@ -22,7 +22,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnItemSelectedListener, OnItemClickListener {
+public class MainActivity extends Activity implements OnItemSelectedListener,
+		OnItemClickListener {
 
 	protected ArrayList<SortablePackageInfo> apps;
 	private int formatIndex;
@@ -96,7 +97,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 				sendIntent.setAction(Intent.ACTION_SEND);
 				sendIntent.putExtra(Intent.EXTRA_TEXT, buildList().toString());
 				sendIntent.setType("text/plain");
-				startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+				startActivity(Intent.createChooser(sendIntent,
+						getResources().getText(R.string.send_to)));
 				break;
 			}
 			case R.id.copy: {
@@ -214,8 +216,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 				}
 			}
 		}
-		Toast
-				.makeText(this, R.string.warn_nothing_selected, Toast.LENGTH_LONG)
+		Toast.makeText(this, R.string.warn_nothing_selected, Toast.LENGTH_LONG)
 				.show();
 		return true;
 	}
@@ -239,7 +240,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 		if (installer.startsWith("org.slideme")) {
 			return "http://slideme.org/app/" + packname;
 		}
-		
+
 		return null;
 	}
 
@@ -263,7 +264,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener, On
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		((CheckBox)view.findViewById(R.id.selected)).toggle();
+		ListView listView = (ListView) findViewById(R.id.applist);
+		AppAdapter aa = (AppAdapter) listView.getAdapter();
+		SortablePackageInfo spi = aa.getItem(position);
+		spi.selected = !spi.selected;
+		aa.notifyDataSetChanged();
 	}
 
 }
