@@ -10,9 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ListView;
 
 public class ListTask extends
@@ -44,9 +42,8 @@ public class ListTask extends
 						&& (ai.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) {
 					CharSequence tmp = pm.getApplicationLabel(info.applicationInfo);
 					String inst = pm.getInstallerPackageName(info.packageName);
-					Drawable icon = ai.loadIcon(pm);
 					spitmp[idx] = new SortablePackageInfo(info.packageName, tmp, true,
-							inst, icon);
+							inst, ai.loadIcon(pm));
 					idx++;
 				}
 			}
