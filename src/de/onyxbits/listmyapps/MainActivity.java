@@ -1,28 +1,44 @@
 package de.onyxbits.listmyapps;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnItemSelectedListener,
-		OnItemClickListener {
+		OnItemClickListener, OnItemLongClickListener {
+
+	public static final String TAG = "de.onyxbits.listmyapps.MainActivity";
 
 	protected ArrayList<SortablePackageInfo> apps;
 	private int formatIndex;
@@ -44,6 +60,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		Spinner spinner = (Spinner) findViewById(R.id.format_select);
 		ListView listView = (ListView) findViewById(R.id.applist);
 		listView.setOnItemClickListener(this);
+		listView.setOnItemLongClickListener(this);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 				R.array.formatnames, android.R.layout.simple_spinner_item);
 		adapter
@@ -265,6 +282,44 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		SortablePackageInfo spi = aa.getItem(position);
 		spi.selected = !spi.selected;
 		aa.notifyDataSetChanged();
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view,
+			int position, long id) {
+		ListView listView = (ListView) findViewById(R.id.applist);
+		AppAdapter aa = (AppAdapter) listView.getAdapter();
+		SortablePackageInfo spi = aa.getItem(position);
+		View content = getLayoutInflater().inflate(R.layout.details, null);
+		ScrollView scrollView = new ScrollView(this);
+		scrollView.addView(content);
+		PackageManager pm = getPackageManager();
+
+		try {
+			PackageInfo info = pm.getPackageInfo(spi.packageName, 0);
+			DateFormat df = DateFormat.getDateTimeInstance();
+			((TextView) content.findViewById(R.id.lbl_val_version))
+					.setText(info.versionName);
+			((TextView) content.findViewById(R.id.lbl_val_versioncode)).setText(""
+					+ info.versionCode);
+			((TextView) content.findViewById(R.id.lbl_val_installed)).setText(df
+					.format(new Date(info.firstInstallTime)));
+			((TextView) content.findViewById(R.id.lbl_val_updated)).setText(df
+					.format(new Date(info.lastUpdateTime)));
+			((TextView) content.findViewById(R.id.lbl_val_uid))
+					.setText(""+info.applicationInfo.uid);
+			((TextView) content.findViewById(R.id.lbl_val_datadir))
+					.setText(info.applicationInfo.dataDir);
+		}
+		catch (NameNotFoundException exp) {
+			Log.w(TAG, exp);
+		}
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(spi.displayName).setIcon(spi.icon).setView(scrollView)
+				.setNegativeButton(null, null).setPositiveButton(null, null)
+				.setNeutralButton(null, null).show();
+		return true;
 	}
 
 }

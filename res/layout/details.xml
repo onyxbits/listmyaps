@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_margin="3dp"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+
+	<TextView
+		android:id="@+id/lbl_version"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/lbl_version"
+		android:layout_marginLeft="5dp"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/lbl_val_version"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginBottom="5dp"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+		android:id="@+id/lbl_versioncode"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/lbl_versioncode"
+		android:layout_marginLeft="5dp"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/lbl_val_versioncode"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginBottom="5dp"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+		android:id="@+id/lbl_installed"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/lbl_installed"
+		android:layout_marginLeft="5dp"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/lbl_val_installed"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginBottom="5dp"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+		android:id="@+id/lbl_updated"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/lbl_updated"
+		android:layout_marginLeft="5dp"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/lbl_val_updated"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginBottom="5dp"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+		android:id="@+id/lbl_uid"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/lbl_uid"
+		android:layout_marginLeft="5dp"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/lbl_val_uid"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginBottom="5dp"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+		android:id="@+id/lbl_datadir"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/lbl_datadir"
+		android:layout_marginLeft="5dp"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/lbl_val_datadir"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginBottom="5dp"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</LinearLayout>

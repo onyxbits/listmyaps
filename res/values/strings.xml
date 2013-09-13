@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">List My Apps</string>
-    <string name="deselect_all">Deselect All</string>
-    <string name="share">Share</string>
-    <string-array name="formatnames">
-        <item>Plain Text</item><item>HTML List</item><item>BBCode List</item><item >Markdown List</item>
-        
-        
-        
-    </string-array>
-        <string name="format_as">Copy/Share as:</string>
-        <string name="list_copied_to_clipboard">List copied to clipboard</string>
-        <string name="always_link">Always link to Google Play, even if the app does not come from there</string>
-        <string name="warn_nothing_selected">Select the apps you want to list!</string>
-        <string name="send_to">Share with</string>
+	<string name="app_name">List My Apps</string>
+	<string name="deselect_all">Deselect All</string>
+	<string name="share">Share</string>
+
+	<string-array name="formatnames">
+		<item>Plain Text</item>
+		<item>HTML List</item>
+		<item>BBCode List</item>
+		<item>Markdown List</item>
+	</string-array>
+
+	<string name="format_as">Copy/Share as:</string>
+	<string name="list_copied_to_clipboard">List copied to clipboard</string>
+	<string name="always_link">Always link to Google Play, even if the app does not come from there</string>
+	<string name="warn_nothing_selected">Select the apps you want to list!</string>
+	<string name="send_to">Share with</string>
+	<string name="lbl_version">Version</string>
+	<string name="lbl_versioncode">Version code</string>
+	<string name="lbl_installed">First installed</string>
+	<string name="lbl_updated">Last updated</string>
+	<string name="lbl_uid">User ID</string>
+	<string name="lbl_datadir">Data directory</string>
 
 </resources>
