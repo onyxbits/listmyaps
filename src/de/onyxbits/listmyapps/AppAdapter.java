@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
@@ -28,6 +29,7 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
     
     ((TextView)ret.findViewById(R.id.appname)).setText(spi.displayName);
     ((TextView)ret.findViewById(R.id.apppackage)).setText(spi.packageName);
+    ((ImageView)ret.findViewById(R.id.icon)).setImageDrawable(spi.icon);
     CheckBox sel = ((CheckBox)ret.findViewById(R.id.selected));
     sel.setChecked(spi.selected);
     sel.setOnClickListener(spi);

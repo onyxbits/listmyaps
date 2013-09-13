@@ -1,5 +1,6 @@
 package de.onyxbits.listmyapps;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -14,13 +15,15 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>, View.OnCli
 	public String packageName;
 	public String displayName;
 	public String installer;
+	public Drawable icon;
 	public boolean selected;
 
-	public SortablePackageInfo(CharSequence pn, CharSequence dn, boolean sel, String inst) {
+	public SortablePackageInfo(CharSequence pn, CharSequence dn, boolean sel, String inst, Drawable ico) {
 		packageName = pn.toString();
 		displayName = dn.toString();
 		selected=sel;
 		installer=inst;
+		icon=ico;
 	}
 
 	@Override
