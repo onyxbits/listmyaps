@@ -23,5 +23,10 @@
 	<string name="lbl_updated">Last updated</string>
 	<string name="lbl_uid">User ID</string>
 	<string name="lbl_datadir">Data directory</string>
+	<string name="apprater_title">Rate this app?</string>
+	<string name="apprater_message">Hi,\nseems like you find this app useful. Would you consider rating it? This will only take a minute of your time, but encourages further development.</string>
+	<string name="apprater_positive">Sure!</string>
+	<string name="apprater_negative">No thanks</string>
+	<string name="apprater_neutral">Later</string>
 
 </resources>

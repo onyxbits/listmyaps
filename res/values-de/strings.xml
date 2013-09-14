@@ -17,12 +17,16 @@
 	<string name="always_link">Immer auf Google Play verweisen, auch wenn nicht von dort heruntergeladen</string>
 	<string name="warn_nothing_selected">Es muss mindestens eine App ausgewählt sein!</string>
 	<string name="send_to">Teilen mit</string>
-	
 	<string name="lbl_version">Version</string>
 	<string name="lbl_versioncode">Versionsnummer</string>
 	<string name="lbl_installed">Zuerst installiert</string>
 	<string name="lbl_updated">Zuletzt aktualisiert</string>
 	<string name="lbl_uid">Benutzerkennung</string>
 	<string name="lbl_datadir">Datenverzeichnis</string>
+	<string name="apprater_title">App bewerten?</string>
+	<string name="apprater_message">Hi,\nist diese App nützlich? Wenn ja, dann wäre eine Bewertung auf Google Play sehr willkommen. Jetzt eine Bewertung schreiben?</string>
+	<string name="apprater_positive">Sicher!</string>
+	<string name="apprater_negative">Nein, danke</string>
+	<string name="apprater_neutral">Später</string>
 
 </resources>
