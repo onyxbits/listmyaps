@@ -11,6 +11,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * For mapping a SortablePackageInfo into a view.
+ * @author patrick
+ *
+ */
 public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 
 	public AppAdapter(Context context, int textViewResourceId,

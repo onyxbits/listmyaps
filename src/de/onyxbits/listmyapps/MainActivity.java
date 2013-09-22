@@ -220,6 +220,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		return ret;
 	}
 
+	/**
+	 * Check if at least one app is selected. Pop up a toast if none is
+	 * @return true if no app is selected.
+	 */
 	public boolean isNothingSelected() {
 		if (apps != null) {
 			Iterator<SortablePackageInfo> it = apps.iterator();

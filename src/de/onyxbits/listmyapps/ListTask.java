@@ -13,12 +13,23 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.widget.ListView;
 
+/**
+ * Query the packagemanager for a list of all installed apps that are not 
+ * system apps. Populate a listview with the result.
+ * @author patrick
+ *
+ */
 public class ListTask extends
 		AsyncTask<Object, Object, ArrayList<SortablePackageInfo>> {
 
 	private ListView listView;
 	private MainActivity mainActivity;
 
+	/**
+	 * New task
+	 * @param mainActivity context reference
+	 * @param listView the view to populate
+	 */
 	public ListTask(MainActivity mainActivity, ListView listView) {
 		this.listView = listView;
 		this.mainActivity = mainActivity;
