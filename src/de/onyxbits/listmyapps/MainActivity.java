@@ -151,11 +151,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	private CharSequence buildList() {
 		StringBuilder ret = new StringBuilder();
 		Iterator<SortablePackageInfo> it = apps.iterator();
+		boolean alwaysGP = ((CheckBox) findViewById(R.id.always_gplay)).isChecked();
 		while (it.hasNext()) {
 			SortablePackageInfo spi = it.next();
 			if (spi.selected) {
 				String tmp = spi.installer;
-				if (((CheckBox) findViewById(R.id.always_gplay)).isChecked()) {
+				if (alwaysGP) {
 					tmp = "com.google.vending";
 				}
 				String sourceLink = getSourceLink(tmp, spi.packageName);
