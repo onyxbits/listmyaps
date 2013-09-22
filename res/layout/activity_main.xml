@@ -27,7 +27,7 @@
         android:layout_toRightOf="@+id/format_as" />
 
     <CheckBox
-        android:id="@+id/always_link"
+        android:id="@+id/always_gplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/format_as"
@@ -42,7 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/always_link"
+        android:layout_below="@+id/always_gplay"
         android:paddingTop="10dp" >
     </ListView>
 

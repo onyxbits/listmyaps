@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
 		setProgressBarVisibility(true);
-		CheckBox checkbox = (CheckBox) findViewById(R.id.always_link);
+		CheckBox checkbox = (CheckBox) findViewById(R.id.always_gplay);
 		Spinner spinner = (Spinner) findViewById(R.id.format_select);
 		ListView listView = (ListView) findViewById(R.id.applist);
 		listView.setOnItemClickListener(this);
@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		super.onDestroy();
 		SharedPreferences.Editor editor = getSharedPreferences(PREFSFILE, 0).edit();
 		editor.putBoolean(ALWAYS_GOOGLE_PLAY,
-				((CheckBox) findViewById(R.id.always_link)).isChecked());
+				((CheckBox) findViewById(R.id.always_gplay)).isChecked());
 		editor.putInt(FORMATTYPE, formatIndex);
 		if (apps != null) {
 			Iterator<SortablePackageInfo> it = apps.iterator();
@@ -151,15 +151,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	private CharSequence buildList() {
 		StringBuilder ret = new StringBuilder();
 		Iterator<SortablePackageInfo> it = apps.iterator();
-		boolean toMarket = ((CheckBox) findViewById(R.id.always_link)).isChecked();
 		while (it.hasNext()) {
 			SortablePackageInfo spi = it.next();
 			if (spi.selected) {
 				String tmp = spi.installer;
-				if (toMarket) {
+				if (((CheckBox) findViewById(R.id.always_gplay)).isChecked()) {
 					tmp = "com.google.vending";
 				}
-				String marketLink = getMarketLink(tmp, spi.packageName);
+				String sourceLink = getSourceLink(tmp, spi.packageName);
 
 				switch (formatIndex) {
 					case 0: { // Plain Text
@@ -171,12 +170,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 					}
 					case 1: { // HTML list
 						ret.append("<li>");
-						if (marketLink == null) {
+						if (sourceLink == null) {
 							ret.append(spi.displayName);
 						}
 						else {
 							ret.append("<a href=\"");
-							ret.append(marketLink);
+							ret.append(sourceLink);
 							ret.append("\">");
 							ret.append(spi.displayName);
 							ret.append("</a>");
@@ -186,13 +185,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 					}
 					case 2: { // BBCode
 						ret.append("[*] ");
-						if (marketLink == null) {
+						if (sourceLink == null) {
 							ret.append(spi.displayName);
 							ret.append("\n");
 						}
 						else {
 							ret.append("[url=");
-							ret.append(marketLink);
+							ret.append(sourceLink);
 							ret.append("]");
 							ret.append(spi.displayName);
 							ret.append("[/url]\n");
@@ -201,7 +200,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 					}
 					case 3: { // Markdown
 						ret.append("* ");
-						if (marketLink == null) {
+						if (sourceLink == null) {
 							ret.append(spi.displayName);
 							ret.append("\n");
 						}
@@ -209,7 +208,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 							ret.append("[");
 							ret.append(spi.displayName);
 							ret.append("](");
-							ret.append(marketLink);
+							ret.append(sourceLink);
 							ret.append(")\n");
 						}
 						break;
@@ -234,9 +233,16 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		return true;
 	}
 
-	public String getMarketLink(String installer, String packname) {
+	/**
+	 * Figure out from where an app can be downloaded
+	 * @param installer id of the installing app or null if unknown.
+	 * @param packname pacakgename of the app
+	 * @return a url containing a market link. If no market can be determined, 
+	 * a search engine link is returned.
+	 */
+	public String getSourceLink(String installer, String packname) {
 		if (installer == null) {
-			return null;
+			return "https://www.google.com/search?q="+packname;
 		}
 		if (installer.startsWith("com.google")) {
 			return "https://play.google.com/store/apps/details?id=" + packname;
@@ -250,8 +256,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		if (installer.startsWith("com.amazon")) {
 			return "http://www.amazon.com/gp/mas/dl/android?p=" + packname;
 		}
-
-		return null;
+		return "https://www.google.com/search?q="+packname;
 	}
 
 	@Override
