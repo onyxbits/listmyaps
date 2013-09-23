@@ -6,7 +6,7 @@ package de.onyxbits.listmyapps;
  * @author patrick
  *
  */
-class FormatsData {
+class TemplateData {
 	
 	protected long id;
 	protected String formatName;

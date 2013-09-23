@@ -3,32 +3,61 @@ package de.onyxbits.listmyapps;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-public class FormatsSource {
+public class TemplateSource {
 
 	private Schema schema;
-	private SQLiteDatabase database;
+	protected SQLiteDatabase database;
 	private static final String[] all = { Schema.COLUMN_ID, Schema.COLUMN_FNAME,
 			Schema.COLUMN_HEADER, Schema.COLUMN_ITEM, Schema.COLUMN_FOOTER };
 
-	public FormatsSource(Context ctx) {
+	public TemplateSource(Context ctx) {
 		schema = new Schema(ctx);
 	}
 
+	/**
+	 * Open database in r/w mode
+	 * @throws SQLException
+	 */
 	public void open() throws SQLException {
 		database = schema.getWritableDatabase();
 	}
+	
+	/**
+	 * Delete an entry
+	 * @param id row id of the format to kill. Fails silently if unknown.
+	 */
+	public void delete(long id) {
+		database.delete(Schema.TABLE_FORMATS,"_id="+id,null);
+	}
+	
+	/**
+	 * Insert or update a template
+	 * @param data the data. If its id is unknown it gets inserted, otherwise
+	 * updated.
+	 */
+	public void insertOrUpdate(TemplateData data) {
+		ContentValues values = new ContentValues();
+		values.put(Schema.COLUMN_FNAME,data.formatName);
+		values.put(Schema.COLUMN_HEADER,data.header);
+		values.put(Schema.COLUMN_ITEM,data.item);
+		values.put(Schema.COLUMN_FOOTER,data.footer);
+		if (database.update(Schema.TABLE_FORMATS,values,"_id="+data.id,null)!=1) {
+			database.insert(Schema.TABLE_FORMATS,null,values);
+		}
+	}
 
-	public FormatsData get(long id) {
+	public TemplateData get(long id) {
 		Cursor cursor = database.query(Schema.TABLE_FORMATS, all, "_id=" + id,
 				null, null, null, null);
 		cursor.moveToFirst();
-		FormatsData ret = new FormatsData();
-		ret = new FormatsData();
+		TemplateData ret = new TemplateData();
+		ret = new TemplateData();
 		ret.id = cursor.getLong(0);
 		ret.formatName = cursor.getString(1);
 		ret.header = cursor.getString(2);
@@ -37,15 +66,15 @@ public class FormatsSource {
 		return ret;
 	}
 
-	public void add(FormatsData data) {
+	public void add(TemplateData data) {
 	}
 
 	public void remove(long id) {
 	}
 
-	public List<FormatsData> list() {
+	public List<TemplateData> list() {
 		
-		List<FormatsData> ret = new ArrayList<FormatsData>();
+		List<TemplateData> ret = new ArrayList<TemplateData>();
 		String[] all = { Schema.COLUMN_ID, Schema.COLUMN_FNAME,
 				Schema.COLUMN_HEADER, Schema.COLUMN_ITEM, Schema.COLUMN_FOOTER };
 		Cursor cursor = database.query(Schema.TABLE_FORMATS, all, null, null, null,
@@ -54,7 +83,7 @@ public class FormatsSource {
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-      FormatsData fd =new FormatsData();
+      TemplateData fd =new TemplateData();
       fd.id = cursor.getLong(0);
 			fd.formatName = cursor.getString(1);
 			fd.header = cursor.getString(2);

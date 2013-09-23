@@ -2,6 +2,7 @@
     <item android:id="@+id/copy" android:title="@android:string/copy" android:showAsAction="ifRoom|withText" android:icon="@drawable/ic_action_copy"></item>
     <item android:id="@+id/share" android:title="@string/share" android:showAsAction="ifRoom|withText" android:icon="@drawable/ic_action_share"></item><item android:id="@+id/select_all" android:title="@android:string/selectAll"></item>
     <item android:id="@+id/deselect_all" android:title="@string/deselect_all"></item>
+    <item android:id="@+id/edit_templates" android:title="@string/edit_templates"></item>
     
 
 </menu>

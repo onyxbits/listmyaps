@@ -31,33 +31,39 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnItemSelectedListener,
 		OnItemClickListener, OnItemLongClickListener {
 
-	public static final String TAG = "de.onyxbits.listmyapps.MainActivity";
-
 	protected ArrayList<SortablePackageInfo> apps;
-	private long formatId;
-	private FormatsSource formatsDataSource;
+	private TemplateSource templateSource;
+	private TemplateData template;
 
 	public static final String PREFSFILE = "settings";
 	private static final String ALWAYS_GOOGLE_PLAY = "always_link_to_google_play";
-	private static final String FORMATID = "formatid";
+	private static final String TEMPLATEID = "templateid";
 	public static final String SELECTED = "selected";
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle b) {
+		super.onCreate(b);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
 		setProgressBarVisibility(true);
-		CheckBox checkbox = (CheckBox) findViewById(R.id.always_gplay);
-		Spinner spinner = (Spinner) findViewById(R.id.format_select);
 		ListView listView = (ListView) findViewById(R.id.applist);
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		formatsDataSource = new FormatsSource(this);
-		formatsDataSource.open();
-		List<FormatsData> formats = formatsDataSource.list();
-		ArrayAdapter<FormatsData> adapter = new ArrayAdapter<FormatsData>(this,
+		new ListTask(this).execute("");
+		AppRater.appLaunched(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		CheckBox checkbox = (CheckBox) findViewById(R.id.always_gplay);
+		Spinner spinner = (Spinner) findViewById(R.id.format_select);
+		templateSource = new TemplateSource(this);
+		templateSource.open();
+
+		List<TemplateData> formats = templateSource.list();
+		ArrayAdapter<TemplateData> adapter = new ArrayAdapter<TemplateData>(this,
 				android.R.layout.simple_spinner_item, formats);
 		adapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -65,30 +71,30 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		spinner.setOnItemSelectedListener(this);
 		SharedPreferences prefs = getSharedPreferences(PREFSFILE, 0);
 		checkbox.setChecked(prefs.getBoolean((ALWAYS_GOOGLE_PLAY), false));
-		formatId = prefs.getLong(FORMATID, 0);
-		int selection=0;
-		Iterator<FormatsData> it = formats.iterator();
-		int count=0;
-		while(it.hasNext()) {
-			if (it.next().id==formatId) {
-				selection=count;
+		int selection = 0;
+		Iterator<TemplateData> it = formats.iterator();
+		int count = 0;
+		while (it.hasNext()) {
+			template = it.next();
+			if (template.id == prefs.getLong(TEMPLATEID, 0)) {
+				selection = count;
 				break;
 			}
+			template = null;
 			count++;
 		}
-
 		spinner.setSelection(selection);
-		new ListTask(this).execute("");
-		AppRater.appLaunched(this);
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
 		SharedPreferences.Editor editor = getSharedPreferences(PREFSFILE, 0).edit();
 		editor.putBoolean(ALWAYS_GOOGLE_PLAY,
 				((CheckBox) findViewById(R.id.always_gplay)).isChecked());
-		editor.putLong(FORMATID, formatId);
+		if (template != null) {
+			editor.putLong(TEMPLATEID, template.id);
+		}
 		if (apps != null) {
 			Iterator<SortablePackageInfo> it = apps.iterator();
 			while (it.hasNext()) {
@@ -113,25 +119,23 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 
 		switch (item.getItemId()) {
 			case R.id.share: {
-				if (isNothingSelected()) {
-					return true;
+				if (!isNothingSelected()) {
+					Intent sendIntent = new Intent();
+					sendIntent.setAction(Intent.ACTION_SEND);
+					sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
+					sendIntent.setType("text/plain");
+					startActivity(Intent.createChooser(sendIntent, getResources()
+							.getText(R.string.send_to)));
 				}
-				Intent sendIntent = new Intent();
-				sendIntent.setAction(Intent.ACTION_SEND);
-				sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
-				sendIntent.setType("text/plain");
-				startActivity(Intent.createChooser(sendIntent,
-						getResources().getText(R.string.send_to)));
 				break;
 			}
 			case R.id.copy: {
-				if (isNothingSelected()) {
-					return true;
+				if (!isNothingSelected()) {
+					ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+					clipboard.setText(buildOutput().toString());
+					Toast.makeText(this, R.string.list_copied_to_clipboard,
+							Toast.LENGTH_SHORT).show();
 				}
-				ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-				clipboard.setText(buildOutput().toString());
-				Toast.makeText(this, R.string.list_copied_to_clipboard,
-						Toast.LENGTH_SHORT).show();
 				break;
 			}
 			case (R.id.deselect_all): {
@@ -154,6 +158,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				}
 				break;
 			}
+			case (R.id.edit_templates): {
+				startActivity(new Intent(this, TemplatesActivity.class));
+				break;
+			}
 		}
 		return true;
 	}
@@ -165,13 +173,15 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	 */
 	private CharSequence buildOutput() {
 		StringBuilder ret = new StringBuilder();
+		DateFormat df = DateFormat.getDateTimeInstance();
 		Iterator<SortablePackageInfo> it = apps.iterator();
 		boolean alwaysGP = ((CheckBox) findViewById(R.id.always_gplay)).isChecked();
-		FormatsData format = (FormatsData) ((Spinner) findViewById(R.id.format_select))
-				.getSelectedItem();
-		DateFormat df = DateFormat.getDateTimeInstance();
 
-		ret.append(format.header);
+		if (template == null) {
+			return getString(R.string.error_no_templates);
+		}
+
+		ret.append(template.header);
 		while (it.hasNext()) {
 			SortablePackageInfo spi = it.next();
 			if (spi.selected) {
@@ -181,8 +191,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				}
 				String firstInstalled = df.format(new Date(spi.firstInstalled));
 				String lastUpdated = df.format(new Date(spi.lastUpdated));
-				String sourceLink = getSourceLink(tmp, spi.packageName);
-				String tmpl = format.item
+				String sourceLink = createSourceLink(tmp, spi.packageName);
+				String tmpl = template.item
 						.replace("${packagename}", noNull(spi.packageName))
 						.replace("${displayname}", noNull(spi.displayName))
 						.replace("${source}", noNull(sourceLink))
@@ -197,7 +207,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				ret.append(tmpl);
 			}
 		}
-		ret.append(format.footer);
+		ret.append(template.footer);
 		return ret;
 	}
 
@@ -244,7 +254,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	 * @return a url containing a market link. If no market can be determined, a
 	 *         search engine link is returned.
 	 */
-	public String getSourceLink(String installer, String packname) {
+	public static String createSourceLink(String installer, String packname) {
 		if (installer == null) {
 			return "https://www.google.com/search?q=" + packname;
 		}
@@ -264,10 +274,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
-		formatId = ((FormatsData) ((Spinner) findViewById(R.id.format_select))
-				.getSelectedItem()).id;
+	public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+		template = (TemplateData) parent.getAdapter().getItem(pos);
 	}
 
 	@Override
