@@ -5,26 +5,27 @@ import android.view.View;
 import android.widget.CheckBox;
 
 /**
- * Wrapper class for sorting packages alphabetically by label.
- * 
+ * Data container for holding all the relevant information on a package.
  * @author patrick
  * 
  */
-class SortablePackageInfo implements Comparable<SortablePackageInfo>, View.OnClickListener{
+class SortablePackageInfo implements Comparable<SortablePackageInfo>,
+		View.OnClickListener {
 
 	public String packageName;
 	public String displayName;
 	public String installer;
 	public Drawable icon;
 	public boolean selected;
+	public int versionCode;
+	public String version;
+	public long firstInstalled;
+	public long lastUpdated;
+	public int uid;
+	public String dataDir;
+	public String comment;
 
-	public SortablePackageInfo(CharSequence pn, CharSequence dn, boolean sel, String inst, Drawable ico) {
-		packageName = pn.toString();
-		displayName = dn.toString();
-		selected=sel;
-		installer=inst;
-		icon=ico;
-	}
+	public SortablePackageInfo(){}
 
 	@Override
 	public int compareTo(SortablePackageInfo another) {
@@ -33,8 +34,7 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>, View.OnCli
 
 	@Override
 	public void onClick(View v) {
-
-		selected = ((CheckBox)v).isChecked();
+		selected = ((CheckBox) v).isChecked();
 	}
 
 }

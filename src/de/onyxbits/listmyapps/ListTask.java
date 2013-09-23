@@ -14,24 +14,24 @@ import android.os.AsyncTask;
 import android.widget.ListView;
 
 /**
- * Query the packagemanager for a list of all installed apps that are not 
- * system apps. Populate a listview with the result.
+ * Query the packagemanager for a list of all installed apps that are not system
+ * apps. Populate a listview with the result.
+ * 
  * @author patrick
- *
+ * 
  */
 public class ListTask extends
 		AsyncTask<Object, Object, ArrayList<SortablePackageInfo>> {
 
-	private ListView listView;
 	private MainActivity mainActivity;
 
 	/**
 	 * New task
-	 * @param mainActivity context reference
-	 * @param listView the view to populate
+	 * 
+	 * @param mainActivity
+	 *          context reference
 	 */
-	public ListTask(MainActivity mainActivity, ListView listView) {
-		this.listView = listView;
+	public ListTask(MainActivity mainActivity) {
 		this.mainActivity = mainActivity;
 	}
 
@@ -51,16 +51,26 @@ public class ListTask extends
 				ApplicationInfo ai = pm.getApplicationInfo(info.packageName, 0);
 				if ((ai.flags & ApplicationInfo.FLAG_SYSTEM) != ApplicationInfo.FLAG_SYSTEM
 						&& (ai.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) {
-					CharSequence tmp = pm.getApplicationLabel(info.applicationInfo);
-					String inst = pm.getInstallerPackageName(info.packageName);
-					spitmp[idx] = new SortablePackageInfo(info.packageName, tmp, true,
-							inst, ai.loadIcon(pm));
+					spitmp[idx] = new SortablePackageInfo();
+					spitmp[idx].packageName = info.packageName;
+					spitmp[idx].displayName = pm
+							.getApplicationLabel(info.applicationInfo).toString();
+					spitmp[idx].installer = pm.getInstallerPackageName(info.packageName);
+					spitmp[idx].icon = ai.loadIcon(pm);
+					spitmp[idx].versionCode = info.versionCode;
+					spitmp[idx].version = info.versionName;
+					spitmp[idx].firstInstalled = info.firstInstallTime;
+					spitmp[idx].lastUpdated = info.lastUpdateTime;
+					spitmp[idx].uid = info.applicationInfo.uid;
+					spitmp[idx].dataDir = info.applicationInfo.dataDir;
 					idx++;
 				}
 			}
 			catch (NameNotFoundException exp) {
 			}
 		}
+		// Reminder: the copying is necessary because we are filtering away the
+		// system apps.
 		SortablePackageInfo spi[] = new SortablePackageInfo[idx];
 		System.arraycopy(spitmp, 0, spi, 0, idx);
 		Arrays.sort(spi);
@@ -75,7 +85,7 @@ public class ListTask extends
 	@Override
 	protected void onPostExecute(ArrayList<SortablePackageInfo> result) {
 		super.onPostExecute(result);
-		listView
+		((ListView) mainActivity.findViewById(R.id.applist))
 				.setAdapter(new AppAdapter(mainActivity, R.layout.app_item, result));
 		mainActivity.apps = result;
 		mainActivity.setProgressBarIndeterminate(false);

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.text.ClipboardManager;
+import android.text.style.ReplacementSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,12 +39,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	public static final String TAG = "de.onyxbits.listmyapps.MainActivity";
 
 	protected ArrayList<SortablePackageInfo> apps;
-	private int formatIndex;
-	private String[] formatTypes;
+	private long formatId;
+	private FormatsSource formatsDataSource;
 
 	public static final String PREFSFILE = "settings";
 	private static final String ALWAYS_GOOGLE_PLAY = "always_link_to_google_play";
-	private static final String FORMATTYPE = "formattype";
+	private static final String FORMATID = "formatid";
 	public static final String SELECTED = "selected";
 
 	@Override
@@ -57,28 +59,41 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		ListView listView = (ListView) findViewById(R.id.applist);
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-				R.array.formatnames, android.R.layout.simple_spinner_item);
+		formatsDataSource = new FormatsSource(this);
+		formatsDataSource.open();
+		List<FormatsData> formats = formatsDataSource.list();
+		ArrayAdapter<FormatsData> adapter = new ArrayAdapter<FormatsData>(this,
+				android.R.layout.simple_spinner_item, formats);
 		adapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
-		formatTypes = getResources().getStringArray(R.array.formatnames);
 		SharedPreferences prefs = getSharedPreferences(PREFSFILE, 0);
 		checkbox.setChecked(prefs.getBoolean((ALWAYS_GOOGLE_PLAY), false));
-		formatIndex = prefs.getInt(FORMATTYPE, 0);
-		spinner.setSelection(formatIndex);
-		new ListTask(this, listView).execute("");
+		formatId = prefs.getLong(FORMATID, 0);
+		int selection=0;
+		Iterator<FormatsData> it = formats.iterator();
+		int count=0;
+		while(it.hasNext()) {
+			if (it.next().id==formatId) {
+				selection=count;
+				break;
+			}
+			count++;
+		}
+
+		spinner.setSelection(selection);
+		new ListTask(this).execute("");
 		AppRater.appLaunched(this);
 	}
-
+	
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	public void onPause() {
+		super.onPause();
 		SharedPreferences.Editor editor = getSharedPreferences(PREFSFILE, 0).edit();
 		editor.putBoolean(ALWAYS_GOOGLE_PLAY,
 				((CheckBox) findViewById(R.id.always_gplay)).isChecked());
-		editor.putInt(FORMATTYPE, formatIndex);
+		editor.putLong(FORMATID, formatId);
 		if (apps != null) {
 			Iterator<SortablePackageInfo> it = apps.iterator();
 			while (it.hasNext()) {
@@ -108,7 +123,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				}
 				Intent sendIntent = new Intent();
 				sendIntent.setAction(Intent.ACTION_SEND);
-				sendIntent.putExtra(Intent.EXTRA_TEXT, buildList().toString());
+				sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
 				sendIntent.setType("text/plain");
 				startActivity(Intent.createChooser(sendIntent,
 						getResources().getText(R.string.send_to)));
@@ -119,7 +134,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 					return true;
 				}
 				ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-				clipboard.setText(buildList().toString());
+				clipboard.setText(buildOutput().toString());
 				Toast.makeText(this, R.string.list_copied_to_clipboard,
 						Toast.LENGTH_SHORT).show();
 				break;
@@ -148,10 +163,20 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		return true;
 	}
 
-	private CharSequence buildList() {
+	/**
+	 * Construct what is to be shared/copied to the clipboard
+	 * 
+	 * @return the output for sharing.
+	 */
+	private CharSequence buildOutput() {
 		StringBuilder ret = new StringBuilder();
 		Iterator<SortablePackageInfo> it = apps.iterator();
 		boolean alwaysGP = ((CheckBox) findViewById(R.id.always_gplay)).isChecked();
+		FormatsData format = (FormatsData) ((Spinner) findViewById(R.id.format_select))
+				.getSelectedItem();
+		DateFormat df = DateFormat.getDateTimeInstance();
+
+		ret.append(format.header);
 		while (it.hasNext()) {
 			SortablePackageInfo spi = it.next();
 			if (spi.selected) {
@@ -159,69 +184,45 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				if (alwaysGP) {
 					tmp = "com.google.vending";
 				}
+				String firstInstalled = df.format(new Date(spi.firstInstalled));
+				String lastUpdated = df.format(new Date(spi.lastUpdated));
 				String sourceLink = getSourceLink(tmp, spi.packageName);
-
-				switch (formatIndex) {
-					case 0: { // Plain Text
-						ret.append(spi.displayName);
-						ret.append("\n\t");
-						ret.append(spi.packageName);
-						ret.append("\n");
-						break;
-					}
-					case 1: { // HTML list
-						ret.append("<li>");
-						if (sourceLink == null) {
-							ret.append(spi.displayName);
-						}
-						else {
-							ret.append("<a href=\"");
-							ret.append(sourceLink);
-							ret.append("\">");
-							ret.append(spi.displayName);
-							ret.append("</a>");
-						}
-						ret.append("</li>\n");
-						break;
-					}
-					case 2: { // BBCode
-						ret.append("[*] ");
-						if (sourceLink == null) {
-							ret.append(spi.displayName);
-							ret.append("\n");
-						}
-						else {
-							ret.append("[url=");
-							ret.append(sourceLink);
-							ret.append("]");
-							ret.append(spi.displayName);
-							ret.append("[/url]\n");
-						}
-						break;
-					}
-					case 3: { // Markdown
-						ret.append("* ");
-						if (sourceLink == null) {
-							ret.append(spi.displayName);
-							ret.append("\n");
-						}
-						else {
-							ret.append("[");
-							ret.append(spi.displayName);
-							ret.append("](");
-							ret.append(sourceLink);
-							ret.append(")\n");
-						}
-						break;
-					}
-				}
+				String tmpl = format.item
+						.replace("${packagename}", noNull(spi.packageName))
+						.replace("${displayname}", noNull(spi.displayName))
+						.replace("${source}", noNull(sourceLink))
+						.replace("${comment}", noNull(spi.comment))
+						.replace("${versioncode}", "" + spi.versionCode)
+						.replace("${version}", noNull(spi.version))
+						.replace("${uid}", "" + spi.uid)
+						.replace("${firstinstalled}", firstInstalled)
+						.replace("${lastupdated}", lastUpdated)
+						.replace("${datadir}", noNull(spi.dataDir))
+						.replace("${marketid}", noNull(spi.installer));
+				ret.append(tmpl);
 			}
 		}
+		ret.append(format.footer);
 		return ret;
 	}
 
 	/**
-	 * Check if at least one app is selected. Pop up a toast if none is
+	 * Make sure a string is not null
+	 * 
+	 * @param input
+	 *          the string to check
+	 * @return the input string or an empty string if the input was null.
+	 */
+	public static String noNull(String input) {
+		if (input == null) {
+			return "";
+		}
+		return input;
+	}
+
+	/**
+	 * Check if at least one app is selected. Pop up a toast if none is selected.
+	 * 
 	 * @return true if no app is selected.
 	 */
 	public boolean isNothingSelected() {
@@ -240,14 +241,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 
 	/**
 	 * Figure out from where an app can be downloaded
-	 * @param installer id of the installing app or null if unknown.
-	 * @param packname pacakgename of the app
-	 * @return a url containing a market link. If no market can be determined, 
-	 * a search engine link is returned.
+	 * 
+	 * @param installer
+	 *          id of the installing app or null if unknown.
+	 * @param packname
+	 *          pacakgename of the app
+	 * @return a url containing a market link. If no market can be determined, a
+	 *         search engine link is returned.
 	 */
 	public String getSourceLink(String installer, String packname) {
 		if (installer == null) {
-			return "https://www.google.com/search?q="+packname;
+			return "https://www.google.com/search?q=" + packname;
 		}
 		if (installer.startsWith("com.google")) {
 			return "https://play.google.com/store/apps/details?id=" + packname;
@@ -261,19 +265,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		if (installer.startsWith("com.amazon")) {
 			return "http://www.amazon.com/gp/mas/dl/android?p=" + packname;
 		}
-		return "https://www.google.com/search?q="+packname;
+		return "https://www.google.com/search?q=" + packname;
 	}
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
-		String tmp = parent.getItemAtPosition(position).toString();
-		for (int i = 0; i < formatTypes.length; i++) {
-			if (tmp.equals(formatTypes[i])) {
-				formatIndex = i;
-				break;
-			}
-		}
+		formatId = ((FormatsData) ((Spinner) findViewById(R.id.format_select))
+				.getSelectedItem()).id;
 	}
 
 	@Override
@@ -300,27 +299,19 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		View content = getLayoutInflater().inflate(R.layout.details, null);
 		ScrollView scrollView = new ScrollView(this);
 		scrollView.addView(content);
-		PackageManager pm = getPackageManager();
 
-		try {
-			PackageInfo info = pm.getPackageInfo(spi.packageName, 0);
-			DateFormat df = DateFormat.getDateTimeInstance();
-			((TextView) content.findViewById(R.id.lbl_val_version))
-					.setText(info.versionName);
-			((TextView) content.findViewById(R.id.lbl_val_versioncode)).setText(""
-					+ info.versionCode);
-			((TextView) content.findViewById(R.id.lbl_val_installed)).setText(df
-					.format(new Date(info.firstInstallTime)));
-			((TextView) content.findViewById(R.id.lbl_val_updated)).setText(df
-					.format(new Date(info.lastUpdateTime)));
-			((TextView) content.findViewById(R.id.lbl_val_uid))
-					.setText(""+info.applicationInfo.uid);
-			((TextView) content.findViewById(R.id.lbl_val_datadir))
-					.setText(info.applicationInfo.dataDir);
-		}
-		catch (NameNotFoundException exp) {
-			Log.w(TAG, exp);
-		}
+		DateFormat df = DateFormat.getDateTimeInstance();
+		((TextView) content.findViewById(R.id.lbl_val_version))
+				.setText(spi.version);
+		((TextView) content.findViewById(R.id.lbl_val_versioncode)).setText(""
+				+ spi.versionCode);
+		((TextView) content.findViewById(R.id.lbl_val_installed)).setText(df
+				.format(new Date(spi.firstInstalled)));
+		((TextView) content.findViewById(R.id.lbl_val_updated)).setText(df
+				.format(new Date(spi.lastUpdated)));
+		((TextView) content.findViewById(R.id.lbl_val_uid)).setText("" + spi.uid);
+		((TextView) content.findViewById(R.id.lbl_val_datadir))
+				.setText(spi.dataDir);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(spi.displayName).setIcon(spi.icon).setView(scrollView)

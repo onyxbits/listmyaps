@@ -5,11 +5,17 @@
 	<string name="deselect_all">Deselect All</string>
 	<string name="share">Share</string>
 
-	<string-array name="formatnames">
+	<string-array name="stdformattitles">
 		<item>Plain Text</item>
 		<item>HTML List</item>
 		<item>BBCode List</item>
 		<item>Markdown List</item>
+	</string-array>
+	<string-array name="stdformats">
+		<item>${displayname}\n\t${packagename}\n</item>
+		<item>&lt;a href=&quot;${source}&quot;&gt;${displayname}&lt;/a&gt; ${comment}\n</item>
+		<item>[*] [url=&quot;${source}&quot;]${displayname}[/url] ${comment}\n</item>
+		<item>* [${displayname}](${source}) ${comment}\n</item>
 	</string-array>
 
 	<string name="format_as">Copy/Share as:</string>
