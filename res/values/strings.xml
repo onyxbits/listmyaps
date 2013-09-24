@@ -13,8 +13,8 @@
 	</string-array>
 	<string-array name="stdformats">
 		<item>${displayname}\n\t${packagename}\n</item>
-		<item>&lt;a href=&quot;${source}&quot;&gt;${displayname}&lt;/a&gt; ${comment}\n</item>
-		<item>[*] [url=&quot;${source}&quot;]${displayname}[/url] ${comment}\n</item>
+		<item>&lt;a href=\"${source}\"&gt;${displayname}&lt;/a&gt; ${comment}\n</item>
+		<item>[*] [url=\"${source}\"]${displayname}[/url] ${comment}\n</item>
 		<item>* [${displayname}](${source}) ${comment}\n</item>
 	</string-array>
 
@@ -51,5 +51,6 @@
 	<string name="msg_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. The following variables may be used in the item: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, and ${marketid} </string>
 	<string name="lbl_template_name">Template Name:</string>
 	<string name="variables">Variables</string>
+	<string name="hint_comment">Own notes</string>
 
 </resources>
