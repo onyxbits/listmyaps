@@ -13,7 +13,7 @@ public class TemplateSource {
 
 	private Schema schema;
 	protected SQLiteDatabase database;
-	private static final String[] all = { Schema.COLUMN_ID, Schema.COLUMN_FNAME,
+	private static final String[] all = { Schema.COLUMN_ID, Schema.COLUMN_TNAME,
 			Schema.COLUMN_HEADER, Schema.COLUMN_ITEM, Schema.COLUMN_FOOTER };
 
 	public TemplateSource(Context ctx) {
@@ -33,7 +33,7 @@ public class TemplateSource {
 	 * @param id row id of the format to kill. Fails silently if unknown.
 	 */
 	public void delete(long id) {
-		database.delete(Schema.TABLE_FORMATS,"_id="+id,null);
+		database.delete(Schema.TABLE_TEMPLATES,"_id="+id,null);
 	}
 	
 	/**
@@ -43,17 +43,17 @@ public class TemplateSource {
 	 */
 	public void insertOrUpdate(TemplateData data) {
 		ContentValues values = new ContentValues();
-		values.put(Schema.COLUMN_FNAME,data.formatName);
+		values.put(Schema.COLUMN_TNAME,data.formatName);
 		values.put(Schema.COLUMN_HEADER,data.header);
 		values.put(Schema.COLUMN_ITEM,data.item);
 		values.put(Schema.COLUMN_FOOTER,data.footer);
-		if (database.update(Schema.TABLE_FORMATS,values,"_id="+data.id,null)!=1) {
-			database.insert(Schema.TABLE_FORMATS,null,values);
+		if (database.update(Schema.TABLE_TEMPLATES,values,"_id="+data.id,null)!=1) {
+			database.insert(Schema.TABLE_TEMPLATES,null,values);
 		}
 	}
 
 	public TemplateData get(long id) {
-		Cursor cursor = database.query(Schema.TABLE_FORMATS, all, "_id=" + id,
+		Cursor cursor = database.query(Schema.TABLE_TEMPLATES, all, "_id=" + id,
 				null, null, null, null);
 		cursor.moveToFirst();
 		TemplateData ret = new TemplateData();
@@ -75,9 +75,9 @@ public class TemplateSource {
 	public List<TemplateData> list() {
 		
 		List<TemplateData> ret = new ArrayList<TemplateData>();
-		String[] all = { Schema.COLUMN_ID, Schema.COLUMN_FNAME,
+		String[] all = { Schema.COLUMN_ID, Schema.COLUMN_TNAME,
 				Schema.COLUMN_HEADER, Schema.COLUMN_ITEM, Schema.COLUMN_FOOTER };
-		Cursor cursor = database.query(Schema.TABLE_FORMATS, all, null, null, null,
+		Cursor cursor = database.query(Schema.TABLE_TEMPLATES, all, null, null, null,
 				null, null);
 
 
