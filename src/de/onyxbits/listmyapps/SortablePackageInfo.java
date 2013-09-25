@@ -22,6 +22,7 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>,
 	public long firstInstalled;
 	public long lastUpdated;
 	public int uid;
+	public int rating;
 	public String dataDir;
 	public String comment;
 

@@ -193,12 +193,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				String lastUpdated = df.format(new Date(spi.lastUpdated));
 				String sourceLink = createSourceLink(tmp, spi.packageName);
 				String tmpl = template.item
+						.replace("${comment}", noNull(spi.comment))
 						.replace("${packagename}", noNull(spi.packageName))
 						.replace("${displayname}", noNull(spi.displayName))
 						.replace("${source}", noNull(sourceLink))
-						.replace("${comment}", noNull(spi.comment))
 						.replace("${versioncode}", "" + spi.versionCode)
 						.replace("${version}", noNull(spi.version))
+						.replace("${rating}",""+spi.rating)
 						.replace("${uid}", "" + spi.uid)
 						.replace("${firstinstalled}", firstInstalled)
 						.replace("${lastupdated}", lastUpdated)
