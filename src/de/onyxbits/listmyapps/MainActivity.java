@@ -125,7 +125,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 					sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
 					sendIntent.setType("text/plain");
 					startActivity(Intent.createChooser(sendIntent, getResources()
-							.getText(R.string.send_to)));
+							.getText(R.string.title_send_to)));
 				}
 				break;
 			}
@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				if (!isNothingSelected()) {
 					ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 					clipboard.setText(buildOutput().toString());
-					Toast.makeText(this, R.string.list_copied_to_clipboard,
+					Toast.makeText(this, R.string.msg_list_copied_to_clipboard,
 							Toast.LENGTH_SHORT).show();
 				}
 				break;
@@ -178,7 +178,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		boolean alwaysGP = ((CheckBox) findViewById(R.id.always_gplay)).isChecked();
 
 		if (template == null) {
-			return getString(R.string.error_no_templates);
+			return getString(R.string.msg_error_no_templates);
 		}
 
 		ret.append(template.header);
@@ -239,7 +239,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				}
 			}
 		}
-		Toast.makeText(this, R.string.warn_nothing_selected, Toast.LENGTH_LONG)
+		Toast.makeText(this, R.string.msg_warn_nothing_selected, Toast.LENGTH_LONG)
 				.show();
 		return true;
 	}

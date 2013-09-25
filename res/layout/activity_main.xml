@@ -16,7 +16,7 @@
     	android:layout_alignParentLeft="true"
     	android:layout_alignParentTop="true"
     	android:gravity="center_vertical"
-    	android:text="@string/format_as"
+    	android:text="@string/lbl_format_as"
     	android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner

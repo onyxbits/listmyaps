@@ -4,6 +4,10 @@
 	<string name="app_name">List My Apps</string>
 	<string name="deselect_all">Deselect All</string>
 	<string name="share">Share</string>
+	<string name="add">Add</string>
+	<string name="remove">Remove</string>
+	<string name="save">Save</string>
+	<string name="edit_templates">Template Editor</string>
 
 	<string-array name="stdformattitles">
 		<item>Plain Text</item>
@@ -18,39 +22,32 @@
 		<item>* [${displayname}](${source}) ${comment}\n</item>
 	</string-array>
 
-	<string name="format_as">Copy/Share as:</string>
-	<string name="list_copied_to_clipboard">List copied to clipboard</string>
 	<string name="always_link">Always link to Google Play, even if the app does not come from there</string>
-	<string name="warn_nothing_selected">Select the apps you want to list!</string>
-	<string name="send_to">Share with</string>
+	<string name="lbl_format_as">Copy/Share as:</string>
 	<string name="lbl_version">Version</string>
 	<string name="lbl_versioncode">Version code</string>
 	<string name="lbl_installed">First installed</string>
 	<string name="lbl_updated">Last updated</string>
 	<string name="lbl_uid">User ID</string>
 	<string name="lbl_datadir">Data directory</string>
+	<string name="lbl_templates">Templates define how lists will be formated. You can create as many as you like, but you must have at least one.</string>
+	<string name="lbl_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. The following variables may be used in the item: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, and ${marketid} </string>
+	<string name="lbl_template_name">Template Name:</string>
 	<string name="apprater_title">Rate this app?</string>
 	<string name="apprater_message">Hi,\nseems like you find this app useful. Would you consider rating it? This will only take a minute of your time, but encourages further development.</string>
 	<string name="apprater_positive">Sure!</string>
 	<string name="apprater_negative">No thanks</string>
 	<string name="apprater_neutral">Later</string>
 	<string name="title_activity_templates">Templates</string>
-	<string name="action_settings">Settings</string>
-	<string name="hello_world">Hello world!</string>
-	<string name="add">Add</string>
-	<string name="remove">Remove</string>
-	<string name="edit_templates">Template Editor</string>
 	<string name="title_activity_template_editor">Template Editor</string>
+	<string name="title_send_to">Share with</string>
 	<string name="hint_header">List header, may be blank</string>
 	<string name="hint_item">Item format, may not be blank</string>
 	<string name="hint_footer">List footer, may be blank</string>
-	<string name="save">Save</string>
-	<string name="error_no_templates">Yikes! How did you manage to delete all your templates?!</string>
-	<string name="error_incomplete">Name and item are required!</string>
-	<string name="msg_templates">Templates define how lists will be formated. You can create as many as you like, but you must have at least one.</string>
-	<string name="msg_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. The following variables may be used in the item: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, and ${marketid} </string>
-	<string name="lbl_template_name">Template Name:</string>
-	<string name="variables">Variables</string>
 	<string name="hint_comment">Own notes</string>
+	<string name="msg_error_no_templates">Yikes! How did you manage to delete all your templates?!</string>
+	<string name="msg_error_incomplete">Name and item are required!</string>
+	<string name="msg_warn_nothing_selected">Select the apps you want to list!</string>
+	<string name="msg_list_copied_to_clipboard">List copied to clipboard</string>
 
 </resources>

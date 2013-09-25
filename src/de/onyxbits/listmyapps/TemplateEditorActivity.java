@@ -55,7 +55,7 @@ public class TemplateEditorActivity extends Activity {
 					finish();
 				}
 				else {
-					Toast.makeText(this, R.string.error_incomplete, Toast.LENGTH_SHORT)
+					Toast.makeText(this, R.string.msg_error_incomplete, Toast.LENGTH_SHORT)
 							.show();
 				}
 				return true;

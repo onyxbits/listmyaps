@@ -17,7 +17,7 @@
 		android:layout_marginBottom="20dp"
 		android:layout_marginTop="5dp"
 		android:gravity="center"
-		android:text="@string/msg_template_editor"
+		android:text="@string/lbl_template_editor"
 		android:textAppearance="?android:attr/textAppearanceSmall" />
 
 	<ScrollView
