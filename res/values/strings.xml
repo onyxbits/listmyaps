@@ -46,7 +46,6 @@
 	<string name="hint_header">List header, may be blank</string>
 	<string name="hint_item">Item format, may not be blank</string>
 	<string name="hint_footer">List footer, may be blank</string>
-	<string name="hint_comment">Own notes</string>
 	<string name="hint_my_notes">My notes</string>
 	<string name="msg_error_no_templates">Yikes! How did you manage to delete all your templates?!</string>
 	<string name="msg_error_incomplete">Name and item are required!</string>

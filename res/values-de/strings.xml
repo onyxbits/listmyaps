@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">List My Apps</string>
+	<string name="deselect_all">Alles abwählen</string>
+	<string name="share">Teilen</string>
+	<string name="add">Hinzufügen</string>
+	<string name="remove">Entfernen</string>
+	<string name="save">Speichern</string>
+	<string name="edit_templates">Vorlagen Editor</string>
+	<string name="annotations">Bemerkungen</string>
+
+	<string-array name="stdformattitles">
+		<item>Einfacher Text</item>
+		<item>HTML Liste</item>
+		<item>BBCode Liste</item>
+		<item>Markdown Liste</item>
+	</string-array>
+	<string-array name="stdformats">
+		<item>${displayname}\n\t${packagename}\n</item>
+		<item>&lt;a href=\"${source}\"&gt;${displayname}&lt;/a&gt; ${comment}\n</item>
+		<item>[*] [url=\"${source}\"]${displayname}[/url] ${comment}\n</item>
+		<item>* [${displayname}](${source}) ${comment}\n</item>
+	</string-array>
+
+	<string name="always_link">Immer auf Google Play verweisen, auch wenn nicht von dort installiert</string>
+	<string name="lbl_format_as">Kopieren/Teilen als:</string>
+	<string name="lbl_version">Version</string>
+	<string name="lbl_versioncode">Versionsnummer</string>
+	<string name="lbl_installed">Zuerst installiert</string>
+	<string name="lbl_updated">Zuletzt aktualisiert</string>
+	<string name="lbl_uid">Benutzerkennung</string>
+	<string name="lbl_datadir">Datenverzeichnis</string>
+	<string name="lbl_templates">Vorlagen definieren wie Listen formatiert werden. Es muss mindestens eine Vorlage vorhanden sein.</string>
+	<string name="lbl_template_editor">Eine Vorlage besteht aus dem Listeneintrag (App info), sowie einer optionalen Kopf- und Fußzeile. Alle Teile werden genauso wie dargestellt aneinander gefügt, wobei der Listeneintrag einmal pro App wiederholt wird (auf Zeilenumbrüche achten!). Die folgenden Variablen können im Listeneintrag verwendet werden: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, und ${marketid} </string>
+	<string name="lbl_annotations_description">Bemerkungen werden in Vorlagen als ${comment} referenziert und können selber andere Variablen enthalten (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, and ${marketid}). Bemerkungen bleiben erhalten wenn die zugehörige App deinstalliert wird (für den Fall, dass sie später reinstalliert wird).</string>
+	<string name="lbl_template_name">Vorlage:</string>
+	<string name="apprater_title">App bewerten?</string>
+	<string name="apprater_message">Hi,\nist diese App nützlich? Wenn ja, dann wäre eine Bewertung auf Google Play sehr willkommen. Jetzt eine Bewertung schreiben?</string>
+	<string name="apprater_positive">Sicher!</string>
+	<string name="apprater_negative">Nein, danke</string>
+	<string name="apprater_neutral">Später</string>
+	<string name="title_activity_templates">Vorlagen</string>
+	<string name="title_activity_annotations">Bemerkungen</string>
+	<string name="title_activity_template_editor">Vorlagen Editor</string>
+	<string name="title_send_to">Teilen mit</string>
+	<string name="hint_header">Listenkopf (darf leer bleiben)</string>
+	<string name="hint_item">Listeneintrag (darf nicht leer bleiben)</string>
+	<string name="hint_footer">Listenfuß (darf leer bleiben)</string>
+	<string name="hint_my_notes">Meine Notizen</string>
+	<string name="msg_error_no_templates">Whoops! Wo sind denn alle Vorlagen hin?!</string>
+	<string name="msg_error_incomplete">Name und Eintrag dürfen nicht leer sein!</string>
+	<string name="msg_warn_nothing_selected">Es muss mindestens eine App asgewählt werden!</string>
+	<string name="msg_list_copied_to_clipboard">Liste in die Zwischenablage kopiert</string>
+	<string name="btn_save">Speichern</string>
+	<string name="btn_cancel">Abbrechen</string>
+
+</resources>
