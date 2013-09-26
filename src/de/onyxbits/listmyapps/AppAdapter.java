@@ -38,27 +38,23 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 		}
 		SortablePackageInfo spi = getItem(position);
 
+		((TextView) ret.findViewById(R.id.appname)).setText(spi.displayName);
+		((TextView) ret.findViewById(R.id.apppackage)).setText(spi.packageName);
+		((ImageView) ret.findViewById(R.id.icon)).setImageDrawable(spi.icon);
+
 		switch (layout) {
 			case R.layout.app_item: {
-				((TextView) ret.findViewById(R.id.appname)).setText(spi.displayName);
-				((TextView) ret.findViewById(R.id.apppackage)).setText(spi.packageName);
-				((ImageView) ret.findViewById(R.id.icon)).setImageDrawable(spi.icon);
 				CheckBox sel = ((CheckBox) ret.findViewById(R.id.selected));
 				sel.setChecked(spi.selected);
 				sel.setOnClickListener(spi);
 				break;
 			}
 			case R.layout.app_item_annotation: {
-				((TextView) ret.findViewById(R.id.appname)).setText(spi.displayName);
-				((TextView) ret.findViewById(R.id.apppackage)).setText(spi.packageName);
-				((ImageView) ret.findViewById(R.id.icon)).setImageDrawable(spi.icon);
 				((TextView) ret.findViewById(R.id.comments)).setText(MainActivity
 						.noNull(spi.comment));
 			}
 		}
-
 		return ret;
-
 	}
 
 }
