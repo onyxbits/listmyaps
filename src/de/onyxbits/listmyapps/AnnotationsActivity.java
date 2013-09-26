@@ -31,22 +31,6 @@ public class AnnotationsActivity extends ListActivity implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// getMenuInflater().inflate(R.menu.annotations, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.save: {
-				return true;
-			}
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public void onListItemClick(ListView l, View v, int pos, long id) {
 		AppAdapter aa = (AppAdapter) getListAdapter();
 		spi = aa.getItem(pos);
