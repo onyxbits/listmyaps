@@ -50,7 +50,7 @@
 	<string name="hint_my_notes">Meine Notizen</string>
 	<string name="msg_error_no_templates">Whoops! Wo sind denn alle Vorlagen hin?!</string>
 	<string name="msg_error_incomplete">Name und Eintrag dürfen nicht leer sein!</string>
-	<string name="msg_warn_nothing_selected">Es muss mindestens eine App asgewählt werden!</string>
+	<string name="msg_warn_nothing_selected">Es muss mindestens eine App ausgewählt werden!</string>
 	<string name="msg_list_copied_to_clipboard">Liste in die Zwischenablage kopiert</string>
 	<string name="btn_save">Speichern</string>
 	<string name="btn_cancel">Abbrechen</string>
