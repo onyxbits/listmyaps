@@ -38,6 +38,14 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="de.onyxbits.listmyapps.TemplatesActivity" />
 		</activity>
+		<activity
+			android:name="de.onyxbits.listmyapps.AnnotationsActivity"
+			android:label="@string/title_activity_annotations"
+			android:parentActivityName="de.onyxbits.listmyapps.MainActivity" >
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="de.onyxbits.listmyapps.MainActivity" />
+		</activity>
 	</application>
 
 </manifest>

@@ -8,7 +8,8 @@ package de.onyxbits.listmyapps;
 public class AnnotationsData {
 
 	public long id;
-	public int sortPriority;
+	public int category;
+	public String packName;
 	public String comment;
 	
 	public AnnotationsData() {

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/RelativeLayout1"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="horizontal"
+	android:paddingBottom="5dp"
+	android:paddingLeft="5dp"
+	android:paddingTop="5dp" >
+
+	<ImageView
+		android:id="@+id/icon"
+		android:layout_width="@android:dimen/app_icon_size"
+		android:layout_height="@android:dimen/app_icon_size"
+		android:layout_gravity="center_vertical"
+		android:layout_marginRight="11dip"
+		android:scaleType="fitCenter" />
+
+	<TextView
+		android:id="@+id/appname"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/icon"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/apppackage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/appname"
+		android:layout_toRightOf="@+id/icon"
+		android:text=""
+		android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+		android:id="@+id/comments"
+		android:layout_marginTop="7dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@+id/icon"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/apppackage"
+		android:text=""
+		android:ems="10" />
+
+
+</RelativeLayout>

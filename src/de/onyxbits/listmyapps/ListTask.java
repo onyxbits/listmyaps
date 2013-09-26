@@ -11,7 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
-import android.widget.ListView;
+import android.app.ListActivity;
 
 /**
  * Query the packagemanager for a list of all installed apps that are not system
@@ -23,27 +23,33 @@ import android.widget.ListView;
 public class ListTask extends
 		AsyncTask<Object, Object, ArrayList<SortablePackageInfo>> {
 
-	private MainActivity mainActivity;
+	private ListActivity listActivity;
+	private int layout;
 
 	/**
 	 * New task
 	 * 
-	 * @param mainActivity
-	 *          context reference
+	 * @param listActivity
+	 *          the activity to report back to
+	 * @param layout
+	 *          layout id to pass to the AppAdaptier
 	 */
-	public ListTask(MainActivity mainActivity) {
-		this.mainActivity = mainActivity;
+	public ListTask(ListActivity listActivity, int layout) {
+		this.listActivity = listActivity;
+		this.layout = layout;
 	}
 
 	@Override
 	protected ArrayList<SortablePackageInfo> doInBackground(Object... params) {
-		SharedPreferences prefs = mainActivity.getSharedPreferences(
+		SharedPreferences prefs = listActivity.getSharedPreferences(
 				MainActivity.PREFSFILE, 0);
 		ArrayList<SortablePackageInfo> ret = new ArrayList<SortablePackageInfo>();
-		PackageManager pm = mainActivity.getPackageManager();
+		PackageManager pm = listActivity.getPackageManager();
 		List<PackageInfo> list = pm.getInstalledPackages(0);
 		SortablePackageInfo spitmp[] = new SortablePackageInfo[list.size()];
 		Iterator<PackageInfo> it = list.iterator();
+		AnnotationsSource aSource = new AnnotationsSource(listActivity);
+		aSource.open();
 		int idx = 0;
 		while (it.hasNext()) {
 			PackageInfo info = it.next();
@@ -63,6 +69,7 @@ public class ListTask extends
 					spitmp[idx].lastUpdated = info.lastUpdateTime;
 					spitmp[idx].uid = info.applicationInfo.uid;
 					spitmp[idx].dataDir = info.applicationInfo.dataDir;
+					spitmp[idx].comment = aSource.getComment(info.packageName);
 					idx++;
 				}
 			}
@@ -85,11 +92,10 @@ public class ListTask extends
 	@Override
 	protected void onPostExecute(ArrayList<SortablePackageInfo> result) {
 		super.onPostExecute(result);
-		((ListView) mainActivity.findViewById(R.id.applist))
-				.setAdapter(new AppAdapter(mainActivity, R.layout.app_item, result));
-		mainActivity.apps = result;
-		mainActivity.setProgressBarIndeterminate(false);
-		mainActivity.setProgressBarVisibility(false);
+		listActivity.setListAdapter(new AppAdapter(listActivity, layout, result,
+				layout));
+		listActivity.setProgressBarIndeterminate(false);
+		listActivity.setProgressBarVisibility(false);
 	}
 
 }

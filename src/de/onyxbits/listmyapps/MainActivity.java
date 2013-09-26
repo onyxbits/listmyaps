@@ -2,13 +2,12 @@ package de.onyxbits.listmyapps;
 
 import java.sql.Date;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.ClipboardManager;
@@ -22,16 +21,16 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnItemSelectedListener,
-		OnItemClickListener, OnItemLongClickListener {
+public class MainActivity extends ListActivity implements
+		OnItemSelectedListener, OnItemClickListener, OnItemLongClickListener {
 
-	protected ArrayList<SortablePackageInfo> apps;
 	private TemplateSource templateSource;
 	private TemplateData template;
 
@@ -47,10 +46,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		setContentView(R.layout.activity_main);
 		setProgressBarIndeterminate(true);
 		setProgressBarVisibility(true);
-		ListView listView = (ListView) findViewById(R.id.applist);
+		ListView listView = getListView();
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		new ListTask(this).execute("");
+		new ListTask(this,R.layout.app_item).execute("");
 		AppRater.appLaunched(this);
 	}
 
@@ -95,12 +94,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 		if (template != null) {
 			editor.putLong(TEMPLATEID, template.id);
 		}
-		if (apps != null) {
-			Iterator<SortablePackageInfo> it = apps.iterator();
-			while (it.hasNext()) {
-				SortablePackageInfo spi = it.next();
-				editor.putBoolean(SELECTED + "." + spi.packageName, spi.selected);
-			}
+		ListAdapter adapter = getListAdapter();
+		int count = adapter.getCount();
+		for (int i = 0; i < count; i++) {
+			SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
+			editor.putBoolean(SELECTED + "." + spi.packageName, spi.selected);
 		}
 		editor.commit();
 	}
@@ -113,9 +111,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (apps == null) {
-			return true;
-		}
 
 		switch (item.getItemId()) {
 			case R.id.share: {
@@ -139,23 +134,28 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				break;
 			}
 			case (R.id.deselect_all): {
-				Iterator<SortablePackageInfo> it = apps.iterator();
-				while (it.hasNext()) {
-					SortablePackageInfo spi = it.next();
+				ListAdapter adapter = getListAdapter();
+				int count = adapter.getCount();
+				for (int i = 0; i < count; i++) {
+					SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
 					spi.selected = false;
-					((AppAdapter) ((ListView) findViewById(R.id.applist)).getAdapter())
-							.notifyDataSetChanged();
 				}
+				((AppAdapter) adapter).notifyDataSetChanged();
 				break;
 			}
 			case (R.id.select_all): {
-				Iterator<SortablePackageInfo> it = apps.iterator();
-				while (it.hasNext()) {
-					SortablePackageInfo spi = it.next();
+				ListAdapter adapter = getListAdapter();
+				int count = adapter.getCount();
+				for (int i = 0; i < count; i++) {
+					SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
 					spi.selected = true;
-					((AppAdapter) ((ListView) findViewById(R.id.applist)).getAdapter())
-							.notifyDataSetChanged();
 				}
+				((AppAdapter) adapter).notifyDataSetChanged();
+				break;
+			}
+
+			case (R.id.annotations): {
+				startActivity(new Intent(this, AnnotationsActivity.class));
 				break;
 			}
 			case (R.id.edit_templates): {
@@ -172,18 +172,19 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	 * @return the output for sharing.
 	 */
 	private CharSequence buildOutput() {
-		StringBuilder ret = new StringBuilder();
-		DateFormat df = DateFormat.getDateTimeInstance();
-		Iterator<SortablePackageInfo> it = apps.iterator();
-		boolean alwaysGP = ((CheckBox) findViewById(R.id.always_gplay)).isChecked();
-
 		if (template == null) {
 			return getString(R.string.msg_error_no_templates);
 		}
 
+		StringBuilder ret = new StringBuilder();
+		DateFormat df = DateFormat.getDateTimeInstance();
+		boolean alwaysGP = ((CheckBox) findViewById(R.id.always_gplay)).isChecked();
+		ListAdapter adapter = getListAdapter();
+		int count = adapter.getCount();
+
 		ret.append(template.header);
-		while (it.hasNext()) {
-			SortablePackageInfo spi = it.next();
+		for (int i = 0; i < count; i++) {
+			SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
 			if (spi.selected) {
 				String tmp = spi.installer;
 				if (alwaysGP) {
@@ -192,14 +193,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 				String firstInstalled = df.format(new Date(spi.firstInstalled));
 				String lastUpdated = df.format(new Date(spi.lastUpdated));
 				String sourceLink = createSourceLink(tmp, spi.packageName);
-				String tmpl = template.item
-						.replace("${comment}", noNull(spi.comment))
+				String tmpl = template.item.replace("${comment}", noNull(spi.comment))
 						.replace("${packagename}", noNull(spi.packageName))
 						.replace("${displayname}", noNull(spi.displayName))
 						.replace("${source}", noNull(sourceLink))
 						.replace("${versioncode}", "" + spi.versionCode)
 						.replace("${version}", noNull(spi.version))
-						.replace("${rating}",""+spi.rating)
+						.replace("${rating}", "" + spi.rating)
 						.replace("${uid}", "" + spi.uid)
 						.replace("${firstinstalled}", firstInstalled)
 						.replace("${lastupdated}", lastUpdated)
@@ -232,10 +232,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	 * @return true if no app is selected.
 	 */
 	public boolean isNothingSelected() {
-		if (apps != null) {
-			Iterator<SortablePackageInfo> it = apps.iterator();
-			while (it.hasNext()) {
-				if (it.next().selected) {
+		ListAdapter adapter = getListAdapter();
+		if (adapter != null) {
+			int count = adapter.getCount();
+			for (int i = 0; i < count; i++) {
+				SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
+				if (spi.selected) {
 					return false;
 				}
 			}
@@ -287,8 +289,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		ListView listView = (ListView) findViewById(R.id.applist);
-		AppAdapter aa = (AppAdapter) listView.getAdapter();
+		AppAdapter aa = (AppAdapter) getListAdapter();
 		SortablePackageInfo spi = aa.getItem(position);
 		spi.selected = !spi.selected;
 		aa.notifyDataSetChanged();
@@ -297,8 +298,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener,
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
-		ListView listView = (ListView) findViewById(R.id.applist);
-		AppAdapter aa = (AppAdapter) listView.getAdapter();
+		AppAdapter aa = (AppAdapter) getListAdapter();
 		SortablePackageInfo spi = aa.getItem(position);
 		View content = getLayoutInflater().inflate(R.layout.details, null);
 		ScrollView scrollView = new ScrollView(this);
