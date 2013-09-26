@@ -49,7 +49,6 @@ public class MainActivity extends ListActivity implements
 		ListView listView = getListView();
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		new ListTask(this,R.layout.app_item).execute("");
 		AppRater.appLaunched(this);
 	}
 
@@ -83,6 +82,7 @@ public class MainActivity extends ListActivity implements
 			count++;
 		}
 		spinner.setSelection(selection);
+		new ListTask(this,R.layout.app_item).execute("");
 	}
 
 	@Override
