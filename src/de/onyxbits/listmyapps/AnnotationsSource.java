@@ -21,7 +21,17 @@ public class AnnotationsSource {
 
 	public void open() throws SQLException {
 		database = schema.getWritableDatabase();
-		cache();
+		String[] all = { Schema.COLUMN_PACKID, Schema.COLUMN_COMMENT };
+
+		Cursor cursor = database.query(Schema.TABLE_ANOTATIONS, all, null, null,
+				null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			comments.put(cursor.getString(0), cursor.getString(1));
+			cursor.moveToNext();
+		}
+		cursor.close();
 	}
 
 	public String getComment(String packName) {
@@ -37,19 +47,5 @@ public class AnnotationsSource {
 			values.put(Schema.COLUMN_PACKID, packName);
 			database.insert(Schema.TABLE_ANOTATIONS, null, values);
 		}
-	}
-
-	private void cache() {
-		String[] all = { Schema.COLUMN_PACKID, Schema.COLUMN_COMMENT };
-
-		Cursor cursor = database.query(Schema.TABLE_ANOTATIONS, all, null, null,
-				null, null, null);
-
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			comments.put(cursor.getString(0), cursor.getString(1));
-			cursor.moveToNext();
-		}
-		cursor.close();
 	}
 }
