@@ -1,4 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/item_add" android:title="@string/add" android:showAsAction="ifRoom|withText" android:icon="@drawable/ic_action_add"></item>
+
+	<item
+		android:id="@+id/item_add"
+		android:icon="@drawable/ic_action_add"
+		android:showAsAction="ifRoom|withText"
+		android:title="@string/add">
+	</item>
 
 </menu>
