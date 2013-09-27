@@ -1,5 +1,7 @@
 package de.onyxbits.listmyapps;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -27,6 +29,8 @@ public class AnnotationsActivity extends ListActivity implements
 		setProgressBarVisibility(true);
 		annotationsSource = new AnnotationsSource(this);
 		annotationsSource.open();
+		setListAdapter(new AppAdapter(this, R.layout.app_item_annotation,
+				new ArrayList<SortablePackageInfo>(), R.layout.app_item_annotation));
 		new ListTask(this, R.layout.app_item_annotation).execute("");
 	}
 

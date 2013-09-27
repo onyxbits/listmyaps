@@ -2,6 +2,7 @@ package de.onyxbits.listmyapps;
 
 import java.sql.Date;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,7 +83,9 @@ public class MainActivity extends ListActivity implements
 			count++;
 		}
 		spinner.setSelection(selection);
-		new ListTask(this,R.layout.app_item).execute("");
+		setListAdapter(new AppAdapter(this, R.layout.app_item,
+				new ArrayList<SortablePackageInfo>(), R.layout.app_item));
+		new ListTask(this, R.layout.app_item).execute("");
 	}
 
 	@Override
