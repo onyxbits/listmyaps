@@ -14,18 +14,22 @@
 	</item>
 	<item
 		android:id="@+id/select_all"
+		android:icon="@drawable/ic_action_select_all"
 		android:title="@android:string/selectAll">
 	</item>
 	<item
 		android:id="@+id/deselect_all"
+		android:icon="@drawable/ic_action_deselect_all"
 		android:title="@string/deselect_all">
 	</item>
 	<item
 		android:id="@+id/annotations"
+		android:icon="@drawable/ic_action_annotations"
 		android:title="@string/annotations">
 	</item>
 	<item
 		android:id="@+id/edit_templates"
+		android:icon="@drawable/ic_action_templates"
 		android:title="@string/edit_templates">
 	</item>
 
