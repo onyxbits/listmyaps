@@ -20,6 +20,7 @@
 		android:id="@+id/appname"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_toLeftOf="@+id/selected"
 		android:layout_toRightOf="@+id/icon"
 		android:text=""
 		android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -28,6 +29,7 @@
 		android:id="@+id/apppackage"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_alignRight="@+id/appname"
 		android:layout_below="@+id/appname"
 		android:layout_toRightOf="@+id/icon"
 		android:text=""
