@@ -15,12 +15,14 @@
 		<item>HTML Liste</item>
 		<item>BBCode Liste</item>
 		<item>Markdown Liste</item>
+		<item>Market URL</item>
 	</string-array>
 	<string-array name="stdformats">
 		<item>${displayname}\n\t${packagename}\n</item>
 		<item>&lt;a href=\"${source}\"&gt;${displayname}&lt;/a&gt; ${comment}\n</item>
 		<item>[*] [url=\"${source}\"]${displayname}[/url] ${comment}\n</item>
 		<item>* [${displayname}](${source}) ${comment}\n</item>
+		<item>market://details?id=${packagename}\n</item>
 	</string-array>
 
 	<string name="always_link">Immer auf Google Play verweisen, auch wenn nicht von dort installiert</string>
