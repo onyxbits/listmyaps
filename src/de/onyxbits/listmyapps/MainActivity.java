@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.TransactionTooLargeException;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -120,7 +121,13 @@ public class MainActivity extends ListActivity implements
 				if (!isNothingSelected()) {
 					Intent sendIntent = new Intent();
 					sendIntent.setAction(Intent.ACTION_SEND);
-					sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
+					try {
+						sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
+					}
+					catch (Exception e) {
+						sendIntent.putExtra(Intent.EXTRA_TEXT,
+								getString(R.string.msg_too_large));
+					}
 					sendIntent.setType("text/plain");
 					startActivity(Intent.createChooser(sendIntent, getResources()
 							.getText(R.string.title_send_to)));
