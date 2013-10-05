@@ -138,8 +138,21 @@ public class MainActivity extends ListActivity implements
 				if (!isNothingSelected()) {
 					ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 					clipboard.setText(buildOutput().toString());
-					Toast.makeText(this, R.string.msg_list_copied_to_clipboard,
-							Toast.LENGTH_SHORT).show();
+					ListAdapter adapter = getListAdapter();
+					int count = adapter.getCount();
+					int selected = 0;
+
+					for (int i = 0; i < count; i++) {
+						SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
+						if (spi.selected) {
+							selected++;
+						}
+					}
+					Toast
+							.makeText(
+									this,
+									getString(R.string.msg_list_copied_to_clipboard, selected,
+											count), Toast.LENGTH_SHORT).show();
 				}
 				break;
 			}
