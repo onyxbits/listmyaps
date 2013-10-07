@@ -1,5 +1,7 @@
 package de.onyxbits.listmyapps;
 
+import java.sql.Date;
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import android.os.Bundle;
@@ -10,11 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class AnnotationsActivity extends ListActivity implements
-		DialogInterface.OnClickListener {
+		DialogInterface.OnClickListener, OnItemLongClickListener {
 
 	private EditText comment;
 	private SortablePackageInfo spi;
@@ -27,6 +33,7 @@ public class AnnotationsActivity extends ListActivity implements
 		setContentView(R.layout.activity_annotations);
 		setProgressBarIndeterminate(true);
 		setProgressBarVisibility(true);
+		getListView().setOnItemLongClickListener(this);
 		annotationsSource = new AnnotationsSource(this);
 		annotationsSource.open();
 		setListAdapter(new AppAdapter(this, R.layout.app_item_annotation,
@@ -54,5 +61,34 @@ public class AnnotationsActivity extends ListActivity implements
 			annotationsSource.putComment(spi.packageName, spi.comment);
 			((AppAdapter) getListAdapter()).notifyDataSetChanged();
 		}
+	}
+	
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view,
+			int position, long id) {
+		AppAdapter aa = (AppAdapter) getListAdapter();
+		SortablePackageInfo spi = aa.getItem(position);
+		View content = getLayoutInflater().inflate(R.layout.details, null);
+		ScrollView scrollView = new ScrollView(this);
+		scrollView.addView(content);
+
+		DateFormat df = DateFormat.getDateTimeInstance();
+		((TextView) content.findViewById(R.id.lbl_val_version))
+				.setText(spi.version);
+		((TextView) content.findViewById(R.id.lbl_val_versioncode)).setText(""
+				+ spi.versionCode);
+		((TextView) content.findViewById(R.id.lbl_val_installed)).setText(df
+				.format(new Date(spi.firstInstalled)));
+		((TextView) content.findViewById(R.id.lbl_val_updated)).setText(df
+				.format(new Date(spi.lastUpdated)));
+		((TextView) content.findViewById(R.id.lbl_val_uid)).setText("" + spi.uid);
+		((TextView) content.findViewById(R.id.lbl_val_datadir))
+				.setText(spi.dataDir);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(spi.displayName).setIcon(spi.icon).setView(scrollView)
+				.setNegativeButton(null, null).setPositiveButton(null, null)
+				.setNeutralButton(null, null).show();
+		return true;
 	}
 }

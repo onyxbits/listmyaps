@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.TransactionTooLargeException;
 import android.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -323,27 +325,23 @@ public class MainActivity extends ListActivity implements
 			int position, long id) {
 		AppAdapter aa = (AppAdapter) getListAdapter();
 		SortablePackageInfo spi = aa.getItem(position);
-		View content = getLayoutInflater().inflate(R.layout.details, null);
-		ScrollView scrollView = new ScrollView(this);
-		scrollView.addView(content);
 
-		DateFormat df = DateFormat.getDateTimeInstance();
-		((TextView) content.findViewById(R.id.lbl_val_version))
-				.setText(spi.version);
-		((TextView) content.findViewById(R.id.lbl_val_versioncode)).setText(""
-				+ spi.versionCode);
-		((TextView) content.findViewById(R.id.lbl_val_installed)).setText(df
-				.format(new Date(spi.firstInstalled)));
-		((TextView) content.findViewById(R.id.lbl_val_updated)).setText(df
-				.format(new Date(spi.lastUpdated)));
-		((TextView) content.findViewById(R.id.lbl_val_uid)).setText("" + spi.uid);
-		((TextView) content.findViewById(R.id.lbl_val_datadir))
-				.setText(spi.dataDir);
+		try {
+			// FIXME: This intent is only available in Gingerbread and up. I don't
+			// want to ditch Froyo, yet. I don't want to implement a giant
+			// compatibility cludge either, so dirty hack compromise: use the value
+			// android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS directly
+			// that way it works on newer droids and silently fails without crashing
+			// on Froyo.
+			Intent i = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
+			i.addCategory(Intent.CATEGORY_DEFAULT);
+			i.setData(Uri.parse("package:" + spi.packageName));
+			startActivity(i);
+		}
+		catch (Exception e) {
+			Log.w(getClass().getName(), e);
+		}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(spi.displayName).setIcon(spi.icon).setView(scrollView)
-				.setNegativeButton(null, null).setPositiveButton(null, null)
-				.setNeutralButton(null, null).show();
 		return true;
 	}
 
