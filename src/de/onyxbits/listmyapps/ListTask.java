@@ -88,6 +88,12 @@ public class ListTask extends
 		}
 		return ret;
 	}
+	
+	@Override
+	protected void onPreExecute() {
+		listActivity.setProgressBarIndeterminate(true);
+		listActivity.setProgressBarVisibility(true);
+	}
 
 	@Override
 	protected void onPostExecute(ArrayList<SortablePackageInfo> result) {

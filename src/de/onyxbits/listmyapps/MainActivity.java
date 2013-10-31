@@ -8,8 +8,6 @@ import java.util.List;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.TransactionTooLargeException;
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,9 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity implements
@@ -48,8 +44,6 @@ public class MainActivity extends ListActivity implements
 		super.onCreate(b);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.activity_main);
-		setProgressBarIndeterminate(true);
-		setProgressBarVisibility(true);
 		ListView listView = getListView();
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
