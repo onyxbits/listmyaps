@@ -228,7 +228,7 @@ public class MainActivity extends ListActivity implements
 			}
 		}
 		ret.append(template.footer);
-		if (ret.length()>70*1024) {
+		if (ret.length()>90*1024) {
 			// NOTE: This is more of a dirty than a solution. The Binder has a fixed
 			// sized buffer, documented to be 1mb large and shared by the entire app.
 			// there is no telling how much free space we actually have, but hitting
