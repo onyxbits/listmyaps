@@ -115,18 +115,27 @@ public class MainActivity extends ListActivity implements
 		switch (item.getItemId()) {
 			case R.id.share: {
 				if (!isNothingSelected()) {
-					Intent sendIntent = new Intent();
-					sendIntent.setAction(Intent.ACTION_SEND);
-					try {
-						sendIntent.putExtra(Intent.EXTRA_TEXT, buildOutput().toString());
+					CharSequence buf = buildOutput();
+					if (buf.length() < 90 * 1024) {
+						// Intents get sent through the Binder and according to the 
+						// TransactionLogTooLargeException docs that thing has a fixed
+						// size, shared buffer (1mb max). There is no telling how much
+						// free space there really is, but exceeding the limit will crash
+						// the device. Restricting ourselves to 90kb (found by trial and
+						// error) is anything but pretty, but still better than forcing
+						// users to reboot. Curiously, the copy&paste buffer can handle
+						// more.
+						Intent sendIntent = new Intent();
+						sendIntent.setAction(Intent.ACTION_SEND);
+						sendIntent.putExtra(Intent.EXTRA_TEXT, buf.toString());
+						sendIntent.setType("text/plain");
+						startActivity(Intent.createChooser(sendIntent, getResources()
+								.getText(R.string.title_send_to)));
 					}
-					catch (Exception e) {
-						sendIntent.putExtra(Intent.EXTRA_TEXT,
-								getString(R.string.msg_too_large));
+					else {
+						Toast.makeText(this, R.string.msg_too_large, Toast.LENGTH_SHORT)
+								.show();
 					}
-					sendIntent.setType("text/plain");
-					startActivity(Intent.createChooser(sendIntent, getResources()
-							.getText(R.string.title_send_to)));
 				}
 				break;
 			}
@@ -228,13 +237,6 @@ public class MainActivity extends ListActivity implements
 			}
 		}
 		ret.append(template.footer);
-		if (ret.length()>90*1024) {
-			// NOTE: This is more of a dirty than a solution. The Binder has a fixed
-			// sized buffer, documented to be 1mb large and shared by the entire app.
-			// there is no telling how much free space we actually have, but hitting
-			// the limit will crash the device (at least on 4.2). Crashing is a no-go.
-			return getString(R.string.msg_too_large);
-		}
 		return ret;
 	}
 
