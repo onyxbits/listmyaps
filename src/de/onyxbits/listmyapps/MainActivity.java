@@ -117,7 +117,7 @@ public class MainActivity extends ListActivity implements
 				if (!isNothingSelected()) {
 					CharSequence buf = buildOutput();
 					if (buf.length() < 90 * 1024) {
-						// Intents get sent through the Binder and according to the 
+						// Intents get sent through the Binder and according to the
 						// TransactionLogTooLargeException docs that thing has a fixed
 						// size, shared buffer (1mb max). There is no telling how much
 						// free space there really is, but exceeding the limit will crash
@@ -226,6 +226,7 @@ public class MainActivity extends ListActivity implements
 						.replace("${displayname}", noNull(spi.displayName))
 						.replace("${source}", noNull(sourceLink))
 						.replace("${versioncode}", "" + spi.versionCode)
+						.replace("${targetsdk}", "" + spi.targetsdk)
 						.replace("${version}", noNull(spi.version))
 						.replace("${rating}", "" + spi.rating)
 						.replace("${uid}", "" + spi.uid)

@@ -70,6 +70,7 @@ public class ListTask extends
 					spitmp[idx].uid = info.applicationInfo.uid;
 					spitmp[idx].dataDir = info.applicationInfo.dataDir;
 					spitmp[idx].comment = aSource.getComment(info.packageName);
+					spitmp[idx].targetsdk = ai.targetSdkVersion;
 					idx++;
 				}
 			}

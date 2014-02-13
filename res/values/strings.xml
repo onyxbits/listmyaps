@@ -34,7 +34,7 @@
 	<string name="lbl_uid">User ID</string>
 	<string name="lbl_datadir">Data directory</string>
 	<string name="lbl_templates">Templates define how lists will be formated. You can create as many as you like, but you must have at least one.</string>
-	<string name="lbl_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. The following variables may be used in the item: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, and ${marketid} </string>
+	<string name="lbl_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. The following variables may be used in the item: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, ${targetsdk} and ${marketid} </string>
 	<string name="lbl_template_name">Template Name:</string>
 	<string name="apprater_title">Rate this app?</string>
 	<string name="apprater_message">Hi,\nseems like you find this app useful. Would you consider rating it? This will only take a minute of your time, but encourages further development.</string>
@@ -54,7 +54,7 @@
 	<string name="msg_warn_nothing_selected">Select the apps you want to list!</string>
 	<string name="msg_too_large">Whoops! Your list was too large for sharing</string>
 	<string name="msg_list_copied_to_clipboard">%1$d/%2$d items copied to clipboard</string>
-	<string name="lbl_annotations_description">Annotations can be referenced in templates as ${comment} and may themselves contain other variables (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, and ${marketid}). Annotations are kept when their app is deinstalled in case it gets reinstalled later.</string>
+	<string name="lbl_annotations_description">Annotations can be referenced in templates as ${comment} and may themselves contain other variables (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, $targetsdk} and ${marketid}). Annotations are kept when their app is deinstalled in case it gets reinstalled later.</string>
 	<string name="btn_save">Save</string>
 	<string name="btn_cancel">Cancel</string>
 	
