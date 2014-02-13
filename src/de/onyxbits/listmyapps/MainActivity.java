@@ -131,13 +131,14 @@ public class MainActivity extends ListActivity implements
 						sendIntent.setType("text/plain");
 						startActivity(Intent.createChooser(sendIntent, getResources()
 								.getText(R.string.title_send_to)));
+						break;
 					}
 					else {
 						Toast.makeText(this, R.string.msg_too_large, Toast.LENGTH_SHORT)
 								.show();
+						// Fallthrough to copy!
 					}
 				}
-				break;
 			}
 			case R.id.copy: {
 				if (!isNothingSelected()) {
