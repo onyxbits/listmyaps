@@ -17,12 +17,26 @@
 		<item>Markdown Liste</item>
 		<item>Market URL</item>
 	</string-array>
+		<string-array name="stdheaders">
+		<item></item>
+		<item>&lt;ul&gt;\n</item>
+		<item>[list]\n</item>
+		<item>\n</item>
+		<item></item>
+	</string-array>
 	<string-array name="stdformats">
 		<item>${displayname}\n\t${packagename}\n</item>
 		<item>&lt;a href=\"${source}\"&gt;${displayname}&lt;/a&gt; ${comment}\n</item>
 		<item>[*] [url=${source}]${displayname}[/url] ${comment}\n</item>
 		<item>* [${displayname}](${source}) ${comment}\n</item>
 		<item>market://details?id=${packagename}\n</item>
+	</string-array>
+	<string-array name="stdfooters">
+		<item></item>
+		<item>&lt;/ul&gt;\nListe erstellt mit &lt;a href="https://play.google.com/store/apps/details?id=de.onyxbits.listmyapps"&gt;List My Apps&lt;/a&gt;</item>
+		<item>[/list]\nListe erstellt mit [url=https://play.google.com/store/apps/details?id=de.onyxbits.listmyapps]List My Apps[/url]</item>
+		<item>\nListe erstellt mit [Lsit My Apps](https://play.google.com/store/apps/details?id=de.onyxbits.listmyapps)</item>
+		<item></item>
 	</string-array>
 
 	<string name="always_link">Immer auf Google Play verweisen, auch wenn nicht von dort installiert</string>

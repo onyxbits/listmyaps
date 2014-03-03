@@ -62,13 +62,17 @@ public class Schema extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		String[] titles = context.getResources().getStringArray(
 				R.array.stdformattitles);
+		String[] headers = context.getResources()
+				.getStringArray(R.array.stdheaders);
 		String[] formats = context.getResources()
 				.getStringArray(R.array.stdformats);
+		String[] footers = context.getResources()
+				.getStringArray(R.array.stdfooters);
 		for (int i = 0; i < formats.length; i++) {
 			values.put(COLUMN_TNAME, titles[i]);
-			values.put(COLUMN_HEADER, "");
+			values.put(COLUMN_HEADER, headers[i]);
 			values.put(COLUMN_ITEM, formats[i]);
-			values.put(COLUMN_FOOTER, "");
+			values.put(COLUMN_FOOTER, footers[i]);
 			database.insert(Schema.TABLE_TEMPLATES, null, values);
 			values.clear();
 		}
