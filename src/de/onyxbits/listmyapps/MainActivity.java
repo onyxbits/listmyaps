@@ -3,6 +3,7 @@ package de.onyxbits.listmyapps;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -211,10 +212,14 @@ public class MainActivity extends ListActivity implements
 		ListAdapter adapter = getListAdapter();
 		int count = adapter.getCount();
 
-		ret.append(template.header);
+		String now = java.text.DateFormat.getDateTimeInstance().format(
+				Calendar.getInstance().getTime());
+		int selected=0;
+
 		for (int i = 0; i < count; i++) {
 			SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
 			if (spi.selected) {
+				selected++;
 				String tmp = spi.installer;
 				if (alwaysGP) {
 					tmp = "com.google.vending";
@@ -238,7 +243,10 @@ public class MainActivity extends ListActivity implements
 				ret.append(tmpl);
 			}
 		}
-		ret.append(template.footer);
+		ret.insert(0,template.header.replace("${now}", now).replace("${count}",
+				"" + selected));
+		ret.append(template.footer.replace("${now}", now).replace("${count}",
+				"" + selected));
 		return ret;
 	}
 
