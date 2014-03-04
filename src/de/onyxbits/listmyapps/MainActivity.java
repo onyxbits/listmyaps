@@ -3,18 +3,17 @@ package de.onyxbits.listmyapps;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.ClipboardManager;
@@ -378,6 +377,26 @@ public class MainActivity extends ListActivity implements
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Open an url in a webbrowser
+	 * 
+	 * @param ctx
+	 *          a context
+	 * @param uri
+	 *          target
+	 */
+	public static void openUri(Context ctx, Uri uri) {
+		try {
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+			ctx.startActivity(browserIntent);
+		}
+		catch (ActivityNotFoundException e) {
+			// There are actually people who don't have a webbrowser installed
+			Toast.makeText(ctx, de.onyxbits.listmyapps.R.string.msg_no_webbrowser, Toast.LENGTH_SHORT)
+					.show();
+		}
 	}
 
 }

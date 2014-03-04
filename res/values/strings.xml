@@ -7,6 +7,7 @@
 	<string name="add">Add</string>
 	<string name="remove">Remove</string>
 	<string name="save">Save</string>
+	<string name="help">Help</string>
 	<string name="edit_templates">Template Editor</string>
 	<string name="annotations">Annotations</string>
 
@@ -76,5 +77,7 @@
 	<string name="bytag">Select by tag</string>
 	<string name="title_select_apps_by_tag">Select apps with tag</string>
 	<string name="msg_no_apps_tagged">No apps tagged! Apps can be tagged via the \'Annotations\' screen.</string>
+	<string name="msg_no_webbrowser">No webbrowser installed!</string>
+	<string name="url_help">http://www.onyxbits.de/faq/list-my-apps</string>
 
 </resources>

@@ -4,10 +4,13 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -56,12 +59,31 @@ public class AnnotationsActivity extends ListActivity implements
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.annotations, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+			case R.id.item_help: {
+				Uri uri = Uri.parse(getString(R.string.url_help));
+				MainActivity.openUri(this,uri);
+				return true;
+			}
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
 			spi.comment = comment.getText().toString();
 			spi.tags = tags.getText().toString();
 			annotationsSource.putComment(spi.packageName, spi.comment);
-			annotationsSource.putTags(spi.packageName,spi.tags);
+			annotationsSource.putTags(spi.packageName, spi.tags);
 			((AppAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}

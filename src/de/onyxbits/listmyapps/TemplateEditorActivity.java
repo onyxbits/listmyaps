@@ -1,14 +1,12 @@
 package de.onyxbits.listmyapps;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
-import android.annotation.TargetApi;
-import android.os.Build;
 
 public class TemplateEditorActivity extends Activity {
 
@@ -64,6 +62,10 @@ public class TemplateEditorActivity extends Activity {
 				formatsDataSource.delete(editing.id);
 				finish();
 				return true;
+			}
+			case R.id.item_help: {
+				Uri uri = Uri.parse(getString(R.string.url_help));
+				MainActivity.openUri(this,uri);
 			}
 		}
 		return super.onOptionsItemSelected(item);
