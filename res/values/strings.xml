@@ -73,8 +73,8 @@
 	<string name="btn_save">Save</string>
 	<string name="btn_cancel">Cancel</string>
 	<string name="hint_my_tags">Tags (comma separated)</string>
-	<string name="bytag">By tag</string>
-	<string name="title_select_apps_by_tag">Select apps by tag</string>
+	<string name="bytag">Select by tag</string>
+	<string name="title_select_apps_by_tag">Select apps with tag</string>
 	<string name="msg_no_apps_tagged">No apps tagged! Apps can be tagged via the \'Annotations\' screen.</string>
 
 </resources>

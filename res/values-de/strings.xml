@@ -72,8 +72,8 @@
 	<string name="btn_save">Speichern</string>
 	<string name="btn_cancel">Abbrechen</string>
 	<string name="hint_my_tags">Tags (durch Komma getrennt)</string>
-	<string name="bytag">Nach Tag</string>
-	<string name="title_select_apps_by_tag">Apps nach Tag auswählen</string>
+	<string name="bytag">Gruppenauswahl</string>
+	<string name="title_select_apps_by_tag">Apps mit Tag auswählen</string>
 	<string name="msg_no_apps_tagged">Keine Apps mit Tags gefunden! Apps können via \'Bemerkungen\' Maske getagt werden.</string>
 
 </resources>
