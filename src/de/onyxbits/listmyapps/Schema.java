@@ -26,6 +26,7 @@ public class Schema extends SQLiteOpenHelper {
 	public static final String TABLE_ANOTATIONS = "annotations";
 	public static final String COLUMN_COMMENT = "comment";
 	public static final String COLUMN_CATEGORY = "category";
+	public static final String COLUMN_TAGS = "tags";
 	public static final String COLUMN_RATING = "rating";
 
 	public static final String TABLE_SELECTION = "selections";
@@ -33,7 +34,7 @@ public class Schema extends SQLiteOpenHelper {
 	public static final String COLUMN_SLOTID = "slotid";
 
 	private static final String DATABASE_NAME = "lma.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private Context context;
 
@@ -44,6 +45,22 @@ public class Schema extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
+		onUpgrade(database, 0, 1); // NOTE: versioning began at 1 not 0.
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		switch (oldVersion+1) {
+			case 1: {
+				v1(db);
+			}
+			case 2: {
+				v2(db);
+			}
+		}
+	}
+
+	private void v1(SQLiteDatabase database) {
 		database.execSQL("create table " + TABLE_TEMPLATES + "(" + COLUMN_ID
 				+ " integer primary key autoincrement, " + COLUMN_TNAME
 				+ " text not null, " + COLUMN_HEADER + " text not null, "
@@ -78,13 +95,8 @@ public class Schema extends SQLiteOpenHelper {
 		}
 	}
 
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(getClass().getName(), "Upgrading database from version " + oldVersion
-				+ " to " + newVersion + ", which will destroy all old data");
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMPLATES);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ANOTATIONS);
-		onCreate(db);
+	private void v2(SQLiteDatabase db) {
+		db.execSQL("alter table " + TABLE_ANOTATIONS + " ADD COLUMN " + COLUMN_TAGS
+				+ " text;");
 	}
-
 }

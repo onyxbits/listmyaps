@@ -3,13 +3,18 @@ package de.onyxbits.listmyapps;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.ClipboardManager;
@@ -192,6 +197,21 @@ public class MainActivity extends ListActivity implements
 				startActivity(new Intent(this, TemplatesActivity.class));
 				break;
 			}
+			case (R.id.bytag): {
+				TagSelectionListener tsl = new TagSelectionListener(getListAdapter());
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				if (tsl.listTags().length == 0) {
+					builder.setTitle(R.string.title_select_apps_by_tag).setMessage(
+							R.string.msg_no_apps_tagged);
+				}
+				else {
+					builder.setTitle(R.string.title_select_apps_by_tag)
+							.setMultiChoiceItems(tsl.listTags(), null, tsl)
+							.setPositiveButton(android.R.string.ok, tsl);
+				}
+				builder.show();
+				break;
+			}
 		}
 		return true;
 	}
@@ -214,7 +234,7 @@ public class MainActivity extends ListActivity implements
 
 		String now = java.text.DateFormat.getDateTimeInstance().format(
 				Calendar.getInstance().getTime());
-		int selected=0;
+		int selected = 0;
 
 		for (int i = 0; i < count; i++) {
 			SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
@@ -243,8 +263,10 @@ public class MainActivity extends ListActivity implements
 				ret.append(tmpl);
 			}
 		}
-		ret.insert(0,template.header.replace("${now}", now).replace("${count}",
-				"" + selected));
+		ret.insert(
+				0,
+				template.header.replace("${now}", now).replace("${count}",
+						"" + selected));
 		ret.append(template.footer.replace("${now}", now).replace("${count}",
 				"" + selected));
 		return ret;

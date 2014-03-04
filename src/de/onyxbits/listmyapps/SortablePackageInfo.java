@@ -20,6 +20,7 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>,
 	public String packageName;
 	public String displayName;
 	public String installer;
+	public String tags;
 	public Drawable icon;
 	public boolean selected;
 	public int versionCode;

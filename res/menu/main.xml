@@ -21,7 +21,7 @@
 		android:id="@+id/deselect_all"
 		android:icon="@drawable/ic_action_deselect_all"
 		android:title="@string/deselect_all">
-	</item>
+	</item><item android:id="@+id/bytag" android:title="@string/bytag"></item>
 	<item
 		android:id="@+id/annotations"
 		android:icon="@drawable/ic_action_annotations"
@@ -32,5 +32,6 @@
 		android:icon="@drawable/ic_action_templates"
 		android:title="@string/edit_templates">
 	</item>
+	
 
 </menu>

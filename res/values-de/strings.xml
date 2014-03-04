@@ -17,7 +17,7 @@
 		<item>Markdown Liste</item>
 		<item>Market URL</item>
 	</string-array>
-		<string-array name="stdheaders">
+	<string-array name="stdheaders">
 		<item></item>
 		<item>&lt;ul&gt;\n</item>
 		<item>[list]\n</item>
@@ -49,7 +49,7 @@
 	<string name="lbl_datadir">Datenverzeichnis</string>
 	<string name="lbl_templates">Vorlagen definieren wie Listen formatiert werden. Es muss mindestens eine Vorlage vorhanden sein.</string>
 	<string name="lbl_template_editor">Eine Vorlage besteht aus dem Listeneintrag (App info), sowie einer optionalen Kopf- und Fußzeile. Alle Teile werden genauso wie dargestellt aneinander gefügt, wobei der Listeneintrag einmal pro App wiederholt wird (auf Zeilenumbrüche achten!). Die folgenden Variablen können im Listeneintrag verwendet werden: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, ${targetsdk} und ${marketid}. Die folgenden Variablen können im Kopf/Fuß verwendet werden: ${now} und ${count} </string>
-	<string name="lbl_annotations_description">Bemerkungen werden in Vorlagen als ${comment} referenziert und können selber andere Variablen enthalten (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, ${targetsdk} und ${marketid}). Bemerkungen bleiben erhalten wenn die zugehörige App deinstalliert wird (für den Fall, dass sie später reinstalliert wird).</string>
+	<string name="lbl_annotations_description">Bemerkungen werden in Vorlagen als ${comment} referenziert und können selber andere Variablen enthalten (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, ${targetsdk} und ${marketid}). Bemerkungen bleiben erhalten wenn die zugehörige App deinstalliert wird (für den Fall, dass sie später reinstalliert wird). Tags erlauben das Gruppieren von Apps.</string>
 	<string name="lbl_template_name">Vorlage:</string>
 	<string name="apprater_title">App bewerten?</string>
 	<string name="apprater_message">Hi,\nist diese App nützlich? Wenn ja, dann wäre eine Bewertung auf Google Play sehr willkommen. Jetzt eine Bewertung schreiben?</string>
@@ -71,5 +71,9 @@
 	<string name="msg_too_large">Oops! Die Liste war zu groß um in den Puffer zu passen. Sie wurde stattdessen in die Zwischenablage kopiert.</string>
 	<string name="btn_save">Speichern</string>
 	<string name="btn_cancel">Abbrechen</string>
+	<string name="hint_my_tags">Tags (durch Komma getrennt)</string>
+	<string name="bytag">Nach Tag</string>
+	<string name="title_select_apps_by_tag">Apps nach Tag auswählen</string>
+	<string name="msg_no_apps_tagged">Keine Apps mit Tags gefunden! Apps können via \'Bemerkungen\' Maske getagt werden.</string>
 
 </resources>

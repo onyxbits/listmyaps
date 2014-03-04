@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -23,6 +21,7 @@ public class AnnotationsActivity extends ListActivity implements
 		DialogInterface.OnClickListener, OnItemLongClickListener {
 
 	private EditText comment;
+	private EditText tags;
 	private SortablePackageInfo spi;
 	private AnnotationsSource annotationsSource;
 
@@ -45,11 +44,13 @@ public class AnnotationsActivity extends ListActivity implements
 	public void onListItemClick(ListView l, View v, int pos, long id) {
 		AppAdapter aa = (AppAdapter) getListAdapter();
 		spi = aa.getItem(pos);
+		View layout = getLayoutInflater().inflate(R.layout.annotionsdialog, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		comment = new EditText(this);
-		comment.setHint(R.string.hint_my_notes);
+		comment = (EditText) layout.findViewById(R.id.comment_input);
 		comment.setText(MainActivity.noNull(spi.comment));
-		builder.setTitle(spi.displayName).setView(comment).setIcon(spi.icon)
+		tags = (EditText) layout.findViewById(R.id.tag_input);
+		tags.setText(MainActivity.noNull(spi.tags));
+		builder.setTitle(spi.displayName).setView(layout).setIcon(spi.icon)
 				.setPositiveButton(R.string.btn_save, this)
 				.setNegativeButton(R.string.btn_cancel, this).show();
 	}
@@ -58,11 +59,13 @@ public class AnnotationsActivity extends ListActivity implements
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
 			spi.comment = comment.getText().toString();
+			spi.tags = tags.getText().toString();
 			annotationsSource.putComment(spi.packageName, spi.comment);
+			annotationsSource.putTags(spi.packageName,spi.tags);
 			((AppAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}
-	
+
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {

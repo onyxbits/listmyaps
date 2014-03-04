@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+
+    <EditText
+    	android:id="@+id/comment_input"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:text=""
+    	android:hint="@string/hint_my_notes"
+    	android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+    	android:id="@+id/tag_input"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:text=""
+    	android:hint="@string/hint_my_tags"
+    	android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>

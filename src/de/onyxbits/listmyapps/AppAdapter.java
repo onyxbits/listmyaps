@@ -50,8 +50,25 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 				break;
 			}
 			case R.layout.app_item_annotation: {
-				((TextView) ret.findViewById(R.id.comments)).setText(MainActivity
-						.noNull(spi.comment));
+				TextView comment = (TextView) ret.findViewById(R.id.comments);
+				TextView tags = (TextView) ret.findViewById(R.id.tags);
+				String tmp = MainActivity.noNull(spi.tags);
+				if (tmp.length() > 0) {
+					tags.setText(tmp);
+					tags.setVisibility(View.VISIBLE);
+				}
+				else {
+					tags.setVisibility(View.GONE);
+				}
+				
+				tmp = MainActivity.noNull(spi.comment);
+				if (tmp.length() > 0) {
+					comment.setText(tmp);
+					comment.setVisibility(View.VISIBLE);
+				}
+				else {
+					comment.setVisibility(View.GONE);
+				}
 			}
 		}
 		return ret;

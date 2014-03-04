@@ -69,8 +69,12 @@
 	<string name="msg_warn_nothing_selected">Select the apps you want to list!</string>
 	<string name="msg_too_large">Whoops! Your list was too large for sharing. Copied to clipboard instead.</string>
 	<string name="msg_list_copied_to_clipboard">%1$d/%2$d items copied to clipboard</string>
-	<string name="lbl_annotations_description">Annotations can be referenced in templates as ${comment} and may themselves contain other variables (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, $targetsdk} and ${marketid}). Annotations are kept when their app is deinstalled in case it gets reinstalled later.</string>
+	<string name="lbl_annotations_description">Annotations can be referenced in templates as ${comment} and may themselves contain other variables (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, $targetsdk} and ${marketid}). Annotations are kept when their app is deinstalled in case it gets reinstalled later. Tags allow for grouping apps for faster selection.</string>
 	<string name="btn_save">Save</string>
 	<string name="btn_cancel">Cancel</string>
+	<string name="hint_my_tags">Tags (comma separated)</string>
+	<string name="bytag">By tag</string>
+	<string name="title_select_apps_by_tag">Select apps by tag</string>
+	<string name="msg_no_apps_tagged">No apps tagged! Apps can be tagged via the \'Annotations\' screen.</string>
 
 </resources>
