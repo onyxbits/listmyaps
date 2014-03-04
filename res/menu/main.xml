@@ -12,7 +12,7 @@
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/share">
 	</item>
-	<item
+	<item android:id="@+id/bytag" android:title="@string/bytag"></item><item
 		android:id="@+id/select_all"
 		android:icon="@drawable/ic_action_select_all"
 		android:title="@android:string/selectAll">
@@ -21,7 +21,7 @@
 		android:id="@+id/deselect_all"
 		android:icon="@drawable/ic_action_deselect_all"
 		android:title="@string/deselect_all">
-	</item><item android:id="@+id/bytag" android:title="@string/bytag"></item>
+	</item>
 	<item
 		android:id="@+id/annotations"
 		android:icon="@drawable/ic_action_annotations"
