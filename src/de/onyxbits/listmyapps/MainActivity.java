@@ -211,6 +211,11 @@ public class MainActivity extends ListActivity implements
 				builder.show();
 				break;
 			}
+			case (R.id.item_help): {
+				Uri uri = Uri.parse(getString(R.string.url_help));
+				MainActivity.openUri(this,uri);
+				return true;
+			} 
 		}
 		return true;
 	}

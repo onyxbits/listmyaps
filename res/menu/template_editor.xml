@@ -2,15 +2,19 @@
 
 	<item
 		android:id="@+id/save"
+		android:icon="@drawable/ic_action_save"
 		android:showAsAction="ifRoom|withText"
-		android:title="@string/save" 
-		android:icon="@drawable/ic_action_save">
+		android:title="@string/save">
 	</item>
 	<item
 		android:id="@+id/remove"
-		android:title="@string/remove"
-		android:icon="@drawable/ic_action_remove">
+		android:icon="@drawable/ic_action_remove"
+		android:title="@string/remove">
 	</item>
-	<item android:id="@id/item_help" android:icon="@drawable/ic_action_help" android:title="@string/help"></item>
+	<item
+		android:id="@id/item_help"
+		android:icon="@drawable/ic_action_help"
+		android:title="@string/help">
+	</item>
 
 </menu>
