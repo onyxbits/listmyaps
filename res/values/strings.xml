@@ -79,5 +79,7 @@
 	<string name="msg_no_apps_tagged">No apps tagged! Apps can be tagged via the \'Annotations\' screen.</string>
 	<string name="msg_no_webbrowser">No webbrowser installed!</string>
 	<string name="url_help">http://www.onyxbits.de/faq/list-my-apps</string>
+	<string name="stumble">stumble</string>
+	<string name="url_stumble">http://www.onyxbits.de/listmyapps/stumble?suggest=%1$s</string>
 
 </resources>
