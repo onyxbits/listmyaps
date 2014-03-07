@@ -76,5 +76,6 @@
 	<string name="bytag">Gruppenauswahl</string>
 	<string name="title_select_apps_by_tag">Apps mit Tag auswählen</string>
 	<string name="msg_no_apps_tagged">Keine Apps mit Tags gefunden! Apps können via \'Bemerkungen\' Maske getagt werden.</string>
+	<string name="browse">browse</string>
 
 </resources>

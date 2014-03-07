@@ -12,11 +12,21 @@
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/share">
 	</item>
-	<item android:id="@+id/stumble" android:icon="@drawable/ic_action_stumble" android:title="@string/stumble" android:showAsAction="ifRoom|withText"></item><item
+	<item
+		android:id="@+id/browse"
+		android:icon="@drawable/ic_action_browse"
+		android:showAsAction="ifRoom|withText"
+		android:title="@string/browse">
+	</item>
+	<item
 		android:id="@+id/select_all"
 		android:icon="@drawable/ic_action_select_all"
 		android:title="@android:string/selectAll">
-	</item><item android:id="@+id/bytag" android:title="@string/bytag"></item>
+	</item>
+	<item
+		android:id="@+id/bytag"
+		android:title="@string/bytag">
+	</item>
 	<item
 		android:id="@+id/deselect_all"
 		android:icon="@drawable/ic_action_deselect_all"
@@ -32,12 +42,10 @@
 		android:icon="@drawable/ic_action_templates"
 		android:title="@string/edit_templates">
 	</item>
-		<item
+	<item
 		android:id="@id/item_help"
 		android:icon="@drawable/ic_action_help"
 		android:title="@string/help">
 	</item>
-		
-	
 
 </menu>

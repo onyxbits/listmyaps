@@ -216,7 +216,7 @@ public class MainActivity extends ListActivity implements
 				MainActivity.openUri(this,uri);
 				return true;
 			} 
-			case (R.id.stumble): {
+			case (R.id.browse): {
 				if (!isNothingSelected()) {
 					doStumble();
 				}
@@ -245,7 +245,7 @@ public class MainActivity extends ListActivity implements
 				}
 			}
 		}
-		openUri(this,Uri.parse(getString(R.string.url_stumble,sb.toString())));
+		openUri(this,Uri.parse(getString(R.string.url_browse,sb.toString())));
 	}
 
 	/**
