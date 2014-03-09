@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -232,17 +233,23 @@ public class MainActivity extends ListActivity implements
 	private void doStumble() {
 		ListAdapter adapter = getListAdapter();
 		int count = adapter.getCount();
-		StringBuilder sb = new StringBuilder();
+		ArrayList<String> collect = new ArrayList<String>(); 
 		for (int i = 0; i < count; i++) {
 			SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
 			if (spi.selected) {
-				if (sb.length()>0) {
-					sb.append(",");
-				}
-				sb.append(spi.packageName);
-				if (sb.length()>200) {
-					break; // prevent the url from growing overly large. 
-				}
+				collect.add(spi.packageName);
+			}
+		}
+		
+		Collections.shuffle(collect);
+		StringBuilder sb = new StringBuilder();
+		for (int i=0;i<collect.size();i++) {
+			if (sb.length()>0) {
+				sb.append(",");
+			}
+			sb.append(collect.get(i));
+			if (sb.length()>200) {
+				break; // prevent the url from growing overly large. 
 			}
 		}
 		openUri(this,Uri.parse(getString(R.string.url_browse,sb.toString())));
