@@ -287,6 +287,7 @@ public class MainActivity extends ListActivity implements
 				String lastUpdated = df.format(new Date(spi.lastUpdated));
 				String sourceLink = createSourceLink(tmp, spi.packageName);
 				String tmpl = template.item.replace("${comment}", noNull(spi.comment))
+						.replace("${tags}",noNull(spi.tags))
 						.replace("${packagename}", noNull(spi.packageName))
 						.replace("${displayname}", noNull(spi.displayName))
 						.replace("${source}", noNull(sourceLink))
