@@ -16,6 +16,7 @@
 			android:layout_marginBottom="20dp"
 			android:layout_marginTop="5dp"
 			android:gravity="center"
+			android:textIsSelectable="true"
 			android:text="@string/lbl_template_editor"
 			android:textAppearance="?android:attr/textAppearanceSmall" />
 

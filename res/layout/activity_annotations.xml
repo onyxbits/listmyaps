@@ -18,6 +18,7 @@
 		android:layout_marginBottom="25dp"
 		android:layout_marginTop="25dp"
 		android:gravity="center"
+		android:textIsSelectable="true"
 		android:text="@string/lbl_annotations_description" />
 
 	<ListView
