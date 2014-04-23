@@ -12,11 +12,6 @@ import android.widget.CheckBox;
 class SortablePackageInfo implements Comparable<SortablePackageInfo>,
 		View.OnClickListener {
 
-	/**
-	 * Maximum items per category (for sorting)
-	 */
-	public static final int MAXCATEGORY=10000;
-	
 	public String packageName;
 	public String displayName;
 	public String installer;
@@ -38,7 +33,7 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>,
 
 	@Override
 	public int compareTo(SortablePackageInfo another) {
-		return MAXCATEGORY*category+ displayName.compareTo(another.displayName);
+		return displayName.toLowerCase().compareTo(another.displayName.toLowerCase());
 	}
 
 	@Override
