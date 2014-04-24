@@ -14,7 +14,7 @@
    id="svg3883"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="Neues Dokument 3">
+   sodipodi:docname="ic_launcher.svg">
   <defs
      id="defs3885" />
   <sodipodi:namedview
@@ -129,8 +129,8 @@
        id="rect3846"
        width="30.193167"
        height="5.0321946"
-       x="23.103817"
-       y="39.436363"
+       x="23.091291"
+       y="39.137562"
        rx="2.5160973"
        ry="2.5160973"
        transform="matrix(0.9991225,0.04188364,-0.04188364,0.9991225,0,0)" />
@@ -157,15 +157,15 @@
     <rect
        ry="2.5160973"
        rx="2.5160973"
-       y="38.574631"
-       x="22.242085"
+       y="38.275829"
+       x="22.229559"
        height="5.0321946"
        width="30.193167"
        id="rect3800"
        style="fill:#aa66cc;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        transform="matrix(0.9991225,0.04188364,-0.04188364,0.9991225,0,0)" />
     <path
-       transform="matrix(0.10719756,0.01056096,-0.01056096,0.10719756,72.300493,6.3062356)"
+       transform="matrix(0.10719756,0.01056096,-0.01056096,0.10719756,72.300493,6.4557683)"
        sodipodi:type="arc"
        style="opacity:0.5;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="path3840"
@@ -181,8 +181,8 @@
        sodipodi:cy="380.49777"
        sodipodi:cx="-499.74908"
        id="path3802"
-       style="fill:#aa66cc;fill-opacity:1;stroke:#000000;stroke-width:9.28362623;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#aa66cc;fill-opacity:1;stroke:#000000;stroke-width:9.28362656;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        sodipodi:type="arc"
-       transform="matrix(0.10719756,0.01056096,-0.01056096,0.10719756,71.720673,5.5996852)" />
+       transform="matrix(0.10719756,0.01056096,-0.01056096,0.10719756,71.720673,5.7492179)" />
   </g>
 </svg>
