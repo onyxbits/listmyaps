@@ -1,5 +1,6 @@
 package de.onyxbits.listmyapps;
 
+import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.CheckBox;
@@ -16,7 +17,6 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>,
 	public String displayName;
 	public String installer;
 	public String tags;
-	public Drawable icon;
 	public boolean selected;
 	public int versionCode;
 	public String version;
@@ -28,6 +28,7 @@ class SortablePackageInfo implements Comparable<SortablePackageInfo>,
 	public String comment;
 	public int category;
 	public int targetsdk;
+	public ApplicationInfo appInfo;
 
 	public SortablePackageInfo(){}
 

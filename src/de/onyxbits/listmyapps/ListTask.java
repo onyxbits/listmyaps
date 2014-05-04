@@ -62,7 +62,7 @@ public class ListTask extends
 					spitmp[idx].displayName = pm
 							.getApplicationLabel(info.applicationInfo).toString();
 					spitmp[idx].installer = pm.getInstallerPackageName(info.packageName);
-					spitmp[idx].icon = ai.loadIcon(pm);
+					spitmp[idx].appInfo = ai;
 					spitmp[idx].versionCode = info.versionCode;
 					spitmp[idx].version = info.versionName;
 					spitmp[idx].firstInstalled = info.firstInstallTime;

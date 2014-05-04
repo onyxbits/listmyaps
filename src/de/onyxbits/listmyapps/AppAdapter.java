@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,8 +21,8 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 
 	private int layout;
 
-	public AppAdapter(Context context, int textViewResourceId,
-			List<SortablePackageInfo> spi, int layout) {
+	public AppAdapter(Context context, int textViewResourceId, List<SortablePackageInfo> spi,
+			int layout) {
 		super(context, textViewResourceId, spi);
 		this.layout = layout;
 	}
@@ -35,12 +34,20 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
 			ret = inflater.inflate(layout, null);
+			ViewHolder vh = new ViewHolder();
+			vh.appName = (TextView) ret.findViewById(R.id.appname);
+			vh.appPackage = (TextView) ret.findViewById(R.id.apppackage);
+			vh.appIcon = (ImageView) ret.findViewById(R.id.icon);
+			vh.comment = (TextView) ret.findViewById(R.id.comments);
+			vh.tags = (TextView) ret.findViewById(R.id.tags);
+			ret.setTag(vh);
 		}
 		SortablePackageInfo spi = getItem(position);
+		ViewHolder viewHolder = (ViewHolder) ret.getTag();
 
-		((TextView) ret.findViewById(R.id.appname)).setText(spi.displayName);
-		((TextView) ret.findViewById(R.id.apppackage)).setText(spi.packageName);
-		((ImageView) ret.findViewById(R.id.icon)).setImageDrawable(spi.icon);
+		viewHolder.appName.setText(spi.displayName);
+		viewHolder.appPackage.setText(spi.packageName);
+		new IconLoaderTask(getContext().getPackageManager(), viewHolder.appIcon).execute(spi.appInfo);
 
 		switch (layout) {
 			case R.layout.app_item: {
@@ -50,24 +57,22 @@ public class AppAdapter extends ArrayAdapter<SortablePackageInfo> {
 				break;
 			}
 			case R.layout.app_item_annotation: {
-				TextView comment = (TextView) ret.findViewById(R.id.comments);
-				TextView tags = (TextView) ret.findViewById(R.id.tags);
 				String tmp = MainActivity.noNull(spi.tags);
 				if (tmp.length() > 0) {
-					tags.setText(tmp);
-					tags.setVisibility(View.VISIBLE);
+					viewHolder.tags.setText(tmp);
+					viewHolder.tags.setVisibility(View.VISIBLE);
 				}
 				else {
-					tags.setVisibility(View.GONE);
+					viewHolder.tags.setVisibility(View.GONE);
 				}
-				
+
 				tmp = MainActivity.noNull(spi.comment);
 				if (tmp.length() > 0) {
-					comment.setText(tmp);
-					comment.setVisibility(View.VISIBLE);
+					viewHolder.comment.setText(tmp);
+					viewHolder.comment.setVisibility(View.VISIBLE);
 				}
 				else {
-					comment.setVisibility(View.GONE);
+					viewHolder.comment.setVisibility(View.GONE);
 				}
 			}
 		}

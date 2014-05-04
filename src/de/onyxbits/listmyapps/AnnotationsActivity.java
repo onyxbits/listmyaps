@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +54,8 @@ public class AnnotationsActivity extends ListActivity implements
 		comment.setText(MainActivity.noNull(spi.comment));
 		tags = (EditText) layout.findViewById(R.id.tag_input);
 		tags.setText(MainActivity.noNull(spi.tags));
-		builder.setTitle(spi.displayName).setView(layout).setIcon(spi.icon)
+		Drawable icon = spi.appInfo.loadIcon(getPackageManager());
+		builder.setTitle(spi.displayName).setView(layout).setIcon(icon)
 				.setPositiveButton(R.string.btn_save, this)
 				.setNegativeButton(R.string.btn_cancel, this).show();
 	}
@@ -111,7 +113,8 @@ public class AnnotationsActivity extends ListActivity implements
 				.setText(spi.dataDir);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(spi.displayName).setIcon(spi.icon).setView(scrollView)
+		Drawable icon = spi.appInfo.loadIcon(getPackageManager());
+		builder.setTitle(spi.displayName).setIcon(icon).setView(scrollView)
 				.setNegativeButton(null, null).setPositiveButton(null, null)
 				.setNeutralButton(null, null).show();
 		return true;
