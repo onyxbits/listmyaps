@@ -60,6 +60,7 @@
 	<string name="title_activity_templates">Vorlagen</string>
 	<string name="title_activity_annotations">Bemerkungen</string>
 	<string name="title_activity_template_editor">Vorlagen Editor</string>
+	<string name="title_variable_to_insert">Variablenauswahl</string>
 	<string name="title_send_to">Teilen mit</string>
 	<string name="hint_header">Listenkopf (darf leer bleiben)</string>
 	<string name="hint_item">Listeneintrag (darf nicht leer bleiben)</string>
@@ -70,6 +71,7 @@
 	<string name="msg_warn_nothing_selected">Es muss mindestens eine App ausgewählt werden!</string>
 	<string name="msg_list_copied_to_clipboard">%1$d/%2$d Einträge in die Zwischenablage kopiert</string>
 	<string name="msg_too_large">Oops! Die Liste war zu groß um in den Puffer zu passen. Sie wurde stattdessen in die Zwischenablage kopiert.</string>
+	<string name="msg_name_does_not_support_variables">Name unterstützt keine Variablen</string>
 	<string name="btn_save">Speichern</string>
 	<string name="btn_cancel">Abbrechen</string>
 	<string name="hint_my_tags">Tags (durch Komma getrennt)</string>

@@ -16,5 +16,6 @@
 		android:icon="@drawable/ic_action_help"
 		android:title="@string/help">
 	</item>
+	<item android:id="@+id/variable" android:showAsAction="ifRoom|withText" android:icon="@drawable/ic_action_variable" android:title="Insert variable"></item>
 
 </menu>

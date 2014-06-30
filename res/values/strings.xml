@@ -11,6 +11,26 @@
 	<string name="edit_templates">Template Editor</string>
 	<string name="annotations">Annotations</string>
 
+	<string-array name="templatebodyvars">
+		<item>${comment}</item>
+		<item>${datadir}</item>
+		<item>${displayname}</item>
+		<item>${firstinstalled}</item>
+		<item>${lastupdated}</item>
+		<item>${marketid}</item>
+		<item>${packagename}</item>
+		<item>${source}</item>
+		<item>${tags}</item>
+		<item>${targetsdk}</item>
+		<item>${uid}</item>
+		<item>${versioncode}</item>
+		<item>${version}</item>
+	</string-array>
+	<string-array name="templateheaderfootervars">
+		<item>${count}</item>
+		<item>${now}</item>
+	</string-array>
+	
 	<string-array name="stdformattitles">
 		<item>Plain Text</item>
 		<item>HTML List</item>
@@ -50,7 +70,7 @@
 	<string name="lbl_uid">User ID</string>
 	<string name="lbl_datadir">Data directory</string>
 	<string name="lbl_templates">Templates define how lists will be formated. You can create as many as you like, but you must have at least one.</string>
-	<string name="lbl_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. The following variables may be used in the item: ${packagename}, ${displayname}, ${source}, ${comment}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, ${targetsdk}, ${tags} and ${marketid}. The following variables may be used in the header/footer: ${now} and ${count}</string>
+	<string name="lbl_template_editor">A template consists of the list item (to be filled with app info), as well as an optional header and footer. All parts will be concatenated \"as-is\", with the item being repeated once per app. Supply newlines as needed. Header, item and footer may contain variables.</string>
 	<string name="lbl_template_name">Template Name:</string>
 	<string name="apprater_title">Rate this app?</string>
 	<string name="apprater_message">Hi,\nseems like you find this app useful. Would you consider rating it? This will only take a minute of your time, but encourages further development.</string>
@@ -61,6 +81,7 @@
 	<string name="title_activity_annotations">Annotations</string>
 	<string name="title_activity_template_editor">Template Editor</string>
 	<string name="title_send_to">Share with</string>
+	<string name="title_variable_to_insert">Variable to insert</string>
 	<string name="hint_header">List header, may be blank</string>
 	<string name="hint_item">Item format, may not be blank</string>
 	<string name="hint_footer">List footer, may be blank</string>
@@ -70,6 +91,7 @@
 	<string name="msg_warn_nothing_selected">Select the apps you want to list!</string>
 	<string name="msg_too_large">Whoops! Your list was too large for sharing. Copied to clipboard instead.</string>
 	<string name="msg_list_copied_to_clipboard">%1$d/%2$d items copied to clipboard</string>
+	<string name="msg_name_does_not_support_variables">Name does not support variables</string>
 	<string name="lbl_annotations_description">Annotations can be referenced in templates as ${comment} and may themselves contain other variables (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, $targetsdk}, ${tags} and ${marketid}). Annotations are kept when their app is deinstalled in case it gets reinstalled later. Tags allow for grouping apps for faster selection.</string>
 	<string name="btn_save">Save</string>
 	<string name="btn_cancel">Cancel</string>
