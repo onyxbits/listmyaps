@@ -81,6 +81,7 @@
 	<string name="title_activity_annotations">Annotations</string>
 	<string name="title_activity_template_editor">Template Editor</string>
 	<string name="title_send_to">Share with</string>
+	<string name="title_really_delete">Really delete?</string>
 	<string name="title_variable_to_insert">Variable to insert</string>
 	<string name="hint_header">List header, may be blank</string>
 	<string name="hint_item">Item format, may not be blank</string>
@@ -92,6 +93,7 @@
 	<string name="msg_too_large">Whoops! Your list was too large for sharing. Copied to clipboard instead.</string>
 	<string name="msg_list_copied_to_clipboard">%1$d/%2$d items copied to clipboard</string>
 	<string name="msg_name_does_not_support_variables">Name does not support variables</string>
+	<string name="msg_this_cannot_be_undone">This cannot be undone</string>
 	<string name="lbl_annotations_description">Annotations can be referenced in templates as ${comment} and may themselves contain other variables (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, $targetsdk}, ${tags} and ${marketid}). Annotations are kept when their app is deinstalled in case it gets reinstalled later. Tags allow for grouping apps for faster selection.</string>
 	<string name="btn_save">Save</string>
 	<string name="btn_cancel">Cancel</string>
@@ -103,5 +105,5 @@
 	<string name="url_help">http://www.onyxbits.de/faq/list-my-apps</string>
 	<string name="browse">browse</string>
 	<string name="url_browse">http://www.onyxbits.de/listmyapps/browse?suggest=%1$s</string>
-
+	
 </resources>

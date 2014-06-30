@@ -19,8 +19,12 @@ public class TemplateEditorActivity extends Activity implements OnClickListener 
 	 */
 	public static final String EDITID = "editid";
 
+	private static final int PENDING_DELETE = 1;
+	private static final int PENDING_INSERT = 2;
+
 	private TemplateData editing;
 	private TemplateSource formatsDataSource;
+	private int pendingAction;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +66,7 @@ public class TemplateEditorActivity extends Activity implements OnClickListener 
 				return true;
 			}
 			case R.id.remove: {
-				formatsDataSource.delete(editing.id);
-				finish();
+				showDeleteConfirm();
 				return true;
 			}
 			case R.id.variable: {
@@ -76,6 +79,16 @@ public class TemplateEditorActivity extends Activity implements OnClickListener 
 			}
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void showDeleteConfirm() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.title_really_delete);
+		builder.setMessage(R.string.msg_this_cannot_be_undone);
+		builder.setPositiveButton(android.R.string.ok,this);
+		builder.setNegativeButton(android.R.string.cancel,this);
+		builder.show();
+		pendingAction = PENDING_DELETE;
 	}
 
 	private void showVariableSelector() {
@@ -94,6 +107,7 @@ public class TemplateEditorActivity extends Activity implements OnClickListener 
 			builder.setItems(R.array.templateheaderfootervars, this);
 		}
 		builder.show();
+		pendingAction = PENDING_INSERT;
 	}
 
 	/**
@@ -119,20 +133,32 @@ public class TemplateEditorActivity extends Activity implements OnClickListener 
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		View focus = getWindow().getCurrentFocus();
-		if (focus.getId() == R.id.tmpl_item) {
-			EditText et = (EditText) focus;
-			int start = Math.max(et.getSelectionStart(), 0);
-			int end = Math.max(et.getSelectionEnd(), 0);
-			String txt = getResources().getStringArray(R.array.templatebodyvars)[which];
-			et.getText().replace(Math.min(start, end), Math.max(start, end), txt, 0, txt.length());
-		}
-		if (focus.getId() == R.id.tmpl_footer || focus.getId() == R.id.tmpl_header) {
-			EditText et = (EditText) focus;
-			int start = Math.max(et.getSelectionStart(), 0);
-			int end = Math.max(et.getSelectionEnd(), 0);
-			String txt = getResources().getStringArray(R.array.templateheaderfootervars)[which];
-			et.getText().replace(Math.min(start, end), Math.max(start, end), txt, 0, txt.length());
+		switch (pendingAction) {
+			case PENDING_INSERT: {
+				View focus = getWindow().getCurrentFocus();
+				if (focus.getId() == R.id.tmpl_item) {
+					EditText et = (EditText) focus;
+					int start = Math.max(et.getSelectionStart(), 0);
+					int end = Math.max(et.getSelectionEnd(), 0);
+					String txt = getResources().getStringArray(R.array.templatebodyvars)[which];
+					et.getText().replace(Math.min(start, end), Math.max(start, end), txt, 0, txt.length());
+				}
+				if (focus.getId() == R.id.tmpl_footer || focus.getId() == R.id.tmpl_header) {
+					EditText et = (EditText) focus;
+					int start = Math.max(et.getSelectionStart(), 0);
+					int end = Math.max(et.getSelectionEnd(), 0);
+					String txt = getResources().getStringArray(R.array.templateheaderfootervars)[which];
+					et.getText().replace(Math.min(start, end), Math.max(start, end), txt, 0, txt.length());
+				}
+				break;
+			}
+			case PENDING_DELETE: {
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					formatsDataSource.delete(editing.id);
+					finish();
+				}
+				break;
+			}
 		}
 	}
 }
