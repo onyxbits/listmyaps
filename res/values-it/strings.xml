@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Elenca app</string>
+	<string name="deselect_all">Deseleziona tutto</string>
+	<string name="share">Condividi</string>
+	<string name="add">Aggiungi</string>
+	<string name="remove">Rimuovi</string>
+	<string name="save">Salva</string>
+	<string name="help">Aiuto</string>
+	<string name="edit_templates">Editor Template</string>
+	<string name="annotations">Annotazioni</string>
+
+	<string-array name="templatebodyvars">
+		<item>${comment}</item>
+		<item>${datadir}</item>
+		<item>${displayname}</item>
+		<item>${firstinstalled}</item>
+		<item>${lastupdated}</item>
+		<item>${marketid}</item>
+		<item>${packagename}</item>
+		<item>${source}</item>
+		<item>${tags}</item>
+		<item>${targetsdk}</item>
+		<item>${uid}</item>
+		<item>${versioncode}</item>
+		<item>${version}</item>
+	</string-array>
+	<string-array name="templateheaderfootervars">
+		<item>${count}</item>
+		<item>${now}</item>
+	</string-array>
+	
+	<string-array name="stdformattitles">
+		<item>Testo puro</item>
+		<item>Lista HTML</item>
+		<item>Lista BBCode</item>
+		<item>Lista Markdown</item>
+		<item>URL Market</item>
+	</string-array>
+	<string-array name="stdheaders">
+		<item></item>
+		<item>&lt;ul&gt;\n</item>
+		<item>[list]\n</item>
+		<item>\n</item>
+		<item></item>
+	</string-array>
+	<string-array name="stdformats">
+		<item>${displayname}\n\t${packagename}\n</item>
+		<item>\u003cli\u003e \u003ca href=\"${source}\"\u003e${displayname}\u003c/a\u003e ${comment}\n</item>
+		<item>[*] [url=${source}]${displayname}[/url] ${comment}\n</item>
+		<item>* [${displayname}](${source}) ${comment}\n</item>
+		<item>market://details?id=${packagename}\n</item>
+	</string-array>
+	<string-array name="stdfooters">
+		<item></item>
+		<item>&lt;/ul&gt;\nLista creata usando &lt;a href=&quot;https://play.google.com/store/apps/details?id=de.onyxbits.listmyapps&quot;&gt;List My Apps&lt;/a&gt;</item>
+		<item>[/list]\nLista creata usando [url=https://play.google.com/store/apps/details?id=de.onyxbits.listmyapps]List My Apps[/url]</item>
+		<item>\nLista creata usando [List My Apps](https://play.google.com/store/apps/details?id=de.onyxbits.listmyapps)</item>
+		<item>\n</item>
+		<item></item>
+	</string-array>
+
+	<string name="always_link">Usa sempre un link al Google Play, anche se l\'app non proviene da lì</string>
+	<string name="lbl_format_as">Copia/Condividi come:</string>
+	<string name="lbl_version">Versione</string>
+	<string name="lbl_versioncode">Codice versione</string>
+	<string name="lbl_installed">Prima installazione</string>
+	<string name="lbl_updated">Ultimo aggiornamento</string>
+	<string name="lbl_uid">User ID</string>
+	<string name="lbl_datadir">Cartella Dati</string>
+	<string name="lbl_templates">I template definiscono come la lista sia formattata. Puoi crearne quanti ne vuoi, ma devi averne almeno uno.</string>
+	<string name="lbl_template_editor">Un template consiste con una voce (che sarà sostituita con le informazioni delle varie app), e da una parte fissa sia all\'inizio che alla fine di questa lista di voci (l\'header e il footer). Tutte le parti saranno concatenate così come sono, con il campo voce che sarà ripetuto per ogni applicazione. Puoi andare a capo se vuoi! Tutti e tre i campi possono contenere diverse variabili.</string>
+	<string name="lbl_template_name">Nome Template:</string>
+	<string name="apprater_title">Vota quest\'app?</string>
+	<string name="apprater_message">Ciao,\nsembra che tu abbia trovato utile quest\'app. Se lo desideri, puoi considerare di votarla! Questo richiede un minuto del tuo tempo, ma ci incoraggererà a cotinuare a svilupparla.</string>
+	<string name="apprater_positive">Certo!</string>
+	<string name="apprater_negative">No grazie</string>
+	<string name="apprater_neutral">Più tardi</string>
+	<string name="title_activity_templates">Template</string>
+	<string name="title_activity_annotations">Annotazioni</string>
+	<string name="title_activity_template_editor">Template Editor</string>
+	<string name="title_send_to">Condividi con</string>
+	<string name="title_really_delete">Cancellare questo elemento?</string>
+	<string name="title_variable_to_insert">Variabile da inserire</string>
+	<string name="hint_header">Header della lista, può rimanere vuoto</string>
+	<string name="hint_item">Voce applicazione, può rimanere vuota</string>
+	<string name="hint_footer">Footer della lista, può rimanere vuoto</string>
+	<string name="hint_my_notes">Note personali</string>
+	<string name="msg_error_no_templates">Wei wei wei what! Come sei riuscito a cancellare tutti i template?!?</string>
+	<string name="msg_error_incomplete">Il nome e la voce sono richiesti!</string>
+	<string name="msg_warn_nothing_selected">Seleziona le app che desideri dalla lista!</string>
+	<string name="msg_too_large">Argh! La tua lista è troppo grande per essere condivisa. È stata perciò soltanto copiata.</string>
+	<string name="msg_list_copied_to_clipboard">Sono state copiate %1$d app (su %2$d)!</string>
+	<string name="msg_name_does_not_support_variables">Il nome non supporta variabili</string>
+	<string name="msg_this_cannot_be_undone">Ciò non può essere annullato</string>
+	<string name="lbl_annotations_description">Le annotazioni possono essere utilizzate all\'interno del template con la variabile ${comment} e a loro volta possono contenere altre variabili (${packagename}, ${displayname}, ${source}, ${uid}, ${version}, ${versioncode}, ${firstinstalled}, ${lastupdated}, ${datadir}, $targetsdk}, ${tags} and ${marketid}). Le annotazioni vengono tenute anche se l\'app in questione viene cancellata, nel caso che poi sia reinstallata. I tag permettono di raggruppare le app per una selezione più rapida.</string>
+	<string name="btn_save">Salva</string>
+	<string name="btn_cancel">Annulla</string>
+	<string name="hint_my_tags">Tag (separate da una virgola)</string>
+	<string name="bytag">Seleziona da tag</string>
+	<string name="title_select_apps_by_tag">Seleziona app con tag</string>
+	<string name="msg_no_apps_tagged">Nessuna app taggata! Le app possono essere taggate tramite le \'Annotazioni\'.</string>
+	<string name="msg_no_webbrowser">Non c\'è nessun web browser installato!</string>
+	<string name="url_help">http://www.onyxbits.de/faq/list-my-apps</string>
+	<string name="browse">Sfoglia online</string>
+	<string name="url_browse">http://www.onyxbits.de/listmyapps/browse?suggest=%1$s</string>
+	
+</resources>
