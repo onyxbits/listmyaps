@@ -47,7 +47,7 @@
 	</string-array>
 	<string-array name="stdformats">
 		<item>${displayname}\n\t${packagename}\n</item>
-		<item>\u003cli\u003e \u003ca href=\"${source}\"\u003e${displayname}\u003c/a\u003e ${comment}\n</item>
+		<item>\u003cli\u003e \u003ca href=\"${source}\"\u003e${displayname}\u003c/a\u003e [\u003ca href=\"market://details?id=${packagename}\"\u003einstall\u003c/a\u003e]${comment}\n</item>
 		<item>[*] [url=${source}]${displayname}[/url] ${comment}\n</item>
 		<item>* [${displayname}](${source}) ${comment}\n</item>
 		<item>market://details?id=${packagename}\n</item>
