@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -34,8 +33,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MainActivity extends ListActivity implements
-		OnItemSelectedListener, OnItemClickListener, OnItemLongClickListener {
+public class MainActivity extends ListActivity implements OnItemSelectedListener,
+		OnItemClickListener, OnItemLongClickListener {
 
 	private TemplateSource templateSource;
 	private TemplateData template;
@@ -67,8 +66,7 @@ public class MainActivity extends ListActivity implements
 		List<TemplateData> formats = templateSource.list();
 		ArrayAdapter<TemplateData> adapter = new ArrayAdapter<TemplateData>(this,
 				android.R.layout.simple_spinner_item, formats);
-		adapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
 		SharedPreferences prefs = getSharedPreferences(PREFSFILE, 0);
@@ -86,8 +84,8 @@ public class MainActivity extends ListActivity implements
 			count++;
 		}
 		spinner.setSelection(selection);
-		setListAdapter(new AppAdapter(this, R.layout.app_item,
-				new ArrayList<SortablePackageInfo>(), R.layout.app_item));
+		setListAdapter(new AppAdapter(this, R.layout.app_item, new ArrayList<SortablePackageInfo>(),
+				R.layout.app_item));
 		new ListTask(this, R.layout.app_item).execute("");
 	}
 
@@ -95,8 +93,7 @@ public class MainActivity extends ListActivity implements
 	public void onPause() {
 		super.onPause();
 		SharedPreferences.Editor editor = getSharedPreferences(PREFSFILE, 0).edit();
-		editor.putBoolean(ALWAYS_GOOGLE_PLAY,
-				((CheckBox) findViewById(R.id.always_gplay)).isChecked());
+		editor.putBoolean(ALWAYS_GOOGLE_PLAY, ((CheckBox) findViewById(R.id.always_gplay)).isChecked());
 		if (template != null) {
 			editor.putLong(TEMPLATEID, template.id);
 		}
@@ -135,13 +132,12 @@ public class MainActivity extends ListActivity implements
 						sendIntent.setAction(Intent.ACTION_SEND);
 						sendIntent.putExtra(Intent.EXTRA_TEXT, buf.toString());
 						sendIntent.setType("text/plain");
-						startActivity(Intent.createChooser(sendIntent, getResources()
-								.getText(R.string.title_send_to)));
+						startActivity(Intent.createChooser(sendIntent,
+								getResources().getText(R.string.title_send_to)));
 						break;
 					}
 					else {
-						Toast.makeText(this, R.string.msg_too_large, Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(this, R.string.msg_too_large, Toast.LENGTH_SHORT).show();
 						// Fallthrough to copy!
 					}
 				}
@@ -160,11 +156,8 @@ public class MainActivity extends ListActivity implements
 							selected++;
 						}
 					}
-					Toast
-							.makeText(
-									this,
-									getString(R.string.msg_list_copied_to_clipboard, selected,
-											count), Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, getString(R.string.msg_list_copied_to_clipboard, selected, count),
+							Toast.LENGTH_SHORT).show();
 				}
 				break;
 			}
@@ -214,45 +207,44 @@ public class MainActivity extends ListActivity implements
 			}
 			case (R.id.item_help): {
 				Uri uri = Uri.parse(getString(R.string.url_help));
-				MainActivity.openUri(this,uri);
+				MainActivity.openUri(this, uri);
 				return true;
-			} 
-			case (R.id.browse): {
-				if (!isNothingSelected()) {
-					doStumble();
-				}
+			}
+			case (R.id.raccon): {
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.onyxbits.de/raccoon"));
+				startActivity(intent);
 				break;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Share with the world.
 	 */
 	private void doStumble() {
 		ListAdapter adapter = getListAdapter();
 		int count = adapter.getCount();
-		ArrayList<String> collect = new ArrayList<String>(); 
+		ArrayList<String> collect = new ArrayList<String>();
 		for (int i = 0; i < count; i++) {
 			SortablePackageInfo spi = (SortablePackageInfo) adapter.getItem(i);
 			if (spi.selected) {
 				collect.add(spi.packageName);
 			}
 		}
-		
+
 		Collections.shuffle(collect);
 		StringBuilder sb = new StringBuilder();
-		for (int i=0;i<collect.size();i++) {
-			if (sb.length()>0) {
+		for (int i = 0; i < collect.size(); i++) {
+			if (sb.length() > 0) {
 				sb.append(",");
 			}
 			sb.append(collect.get(i));
-			if (sb.length()>200) {
-				break; // prevent the url from growing overly large. 
+			if (sb.length() > 200) {
+				break; // prevent the url from growing overly large.
 			}
 		}
-		openUri(this,Uri.parse(getString(R.string.url_browse,sb.toString())));
+		openUri(this, Uri.parse(getString(R.string.url_browse, sb.toString())));
 	}
 
 	/**
@@ -271,8 +263,8 @@ public class MainActivity extends ListActivity implements
 		ListAdapter adapter = getListAdapter();
 		int count = adapter.getCount();
 
-		String now = java.text.DateFormat.getDateTimeInstance().format(
-				Calendar.getInstance().getTime());
+		String now = java.text.DateFormat.getDateTimeInstance()
+				.format(Calendar.getInstance().getTime());
 		int selected = 0;
 
 		for (int i = 0; i < count; i++) {
@@ -287,28 +279,21 @@ public class MainActivity extends ListActivity implements
 				String lastUpdated = df.format(new Date(spi.lastUpdated));
 				String sourceLink = createSourceLink(tmp, spi.packageName);
 				String tmpl = template.item.replace("${comment}", noNull(spi.comment))
-						.replace("${tags}",noNull(spi.tags))
+						.replace("${tags}", noNull(spi.tags))
 						.replace("${packagename}", noNull(spi.packageName))
 						.replace("${displayname}", noNull(spi.displayName))
 						.replace("${source}", noNull(sourceLink))
 						.replace("${versioncode}", "" + spi.versionCode)
-						.replace("${targetsdk}", "" + spi.targetsdk)
-						.replace("${version}", noNull(spi.version))
-						.replace("${rating}", "" + spi.rating)
-						.replace("${uid}", "" + spi.uid)
-						.replace("${firstinstalled}", firstInstalled)
-						.replace("${lastupdated}", lastUpdated)
+						.replace("${targetsdk}", "" + spi.targetsdk).replace("${version}", noNull(spi.version))
+						.replace("${rating}", "" + spi.rating).replace("${uid}", "" + spi.uid)
+						.replace("${firstinstalled}", firstInstalled).replace("${lastupdated}", lastUpdated)
 						.replace("${datadir}", noNull(spi.dataDir))
 						.replace("${marketid}", noNull(spi.installer));
 				ret.append(tmpl);
 			}
 		}
-		ret.insert(
-				0,
-				template.header.replace("${now}", now).replace("${count}",
-						"" + selected));
-		ret.append(template.footer.replace("${now}", now).replace("${count}",
-				"" + selected));
+		ret.insert(0, template.header.replace("${now}", now).replace("${count}", "" + selected));
+		ret.append(template.footer.replace("${now}", now).replace("${count}", "" + selected));
 		return ret;
 	}
 
@@ -342,8 +327,7 @@ public class MainActivity extends ListActivity implements
 				}
 			}
 		}
-		Toast.makeText(this, R.string.msg_warn_nothing_selected, Toast.LENGTH_LONG)
-				.show();
+		Toast.makeText(this, R.string.msg_warn_nothing_selected, Toast.LENGTH_LONG).show();
 		return true;
 	}
 
@@ -387,8 +371,7 @@ public class MainActivity extends ListActivity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		AppAdapter aa = (AppAdapter) getListAdapter();
 		SortablePackageInfo spi = aa.getItem(position);
 		spi.selected = !spi.selected;
@@ -396,8 +379,7 @@ public class MainActivity extends ListActivity implements
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view,
-			int position, long id) {
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		AppAdapter aa = (AppAdapter) getListAdapter();
 		SortablePackageInfo spi = aa.getItem(position);
 
@@ -419,7 +401,7 @@ public class MainActivity extends ListActivity implements
 
 		return true;
 	}
-	
+
 	/**
 	 * Open an url in a webbrowser
 	 * 

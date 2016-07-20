@@ -13,10 +13,10 @@
 		android:title="@string/share">
 	</item>
 	<item
-		android:id="@+id/browse"
-		android:icon="@drawable/ic_action_browse"
+		android:id="@+id/raccon"
 		android:showAsAction="ifRoom|withText"
-		android:title="@string/browse">
+		android:icon="@drawable/ic_action_raccoon"
+		android:title="@string/raccoon">
 	</item>
 	<item
 		android:id="@+id/select_all"

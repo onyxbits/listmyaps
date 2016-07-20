@@ -36,7 +36,7 @@
 		<item>HTML List</item>
 		<item>BBCode List</item>
 		<item>Markdown List</item>
-		<item>Market URL</item>
+		<item>Market URL (Raccoon)</item>
 	</string-array>
 	<string-array name="stdheaders">
 		<item></item>
@@ -105,5 +105,6 @@
 	<string name="url_help">http://www.onyxbits.de/faq/list-my-apps</string>
 	<string name="browse">browse</string>
 	<string name="url_browse">http://www.onyxbits.de/listmyapps/browse?suggest=%1$s</string>
+	<string name="raccoon">Raccoon</string>
 	
 </resources>
